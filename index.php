@@ -71,12 +71,12 @@ echo "</div>";
     <div class="col-md-3">
         <div class="thumbnail panel panel-default">
             <div class="caption">
-                <h3><?php echo $_SESSION["nickname"]?></h3>
-                <p><?php echo $_SESSION["role"]?></p>
+                <h3>Welcome <?php echo $_SESSION["nickname"]?>!</h3>
+                <!--<p><?php echo $_SESSION["role"]?></p>-->
             </div>
             <ul class="list-group">
-                <li class="list-group-item">Job Orders</li>
-                <li class="list-group-item">Purchase Orders</li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
             </ul>
         </div>
     </div>
