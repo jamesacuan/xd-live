@@ -125,8 +125,17 @@ function truncate($string, $length, $dots = "...") {
             </div>
             -->
             <div class="pull-right">
-                <label><input type="checkbox" name="filterme" id="filterme"/> By me</a></label>
-                <label><input type="checkbox" name="filterpublish" id="filterpublish"/> Show Published</a></label>
+                <div id="xd-page" style="float:left; margin-right:10px">
+                </div>
+                <div class="dropdown" style="float:left; margin-right:10px">
+                    <button class="btn btn-default btn-sm" id="dLabel" type="button" data-toggle="dropdown" aria-expanded="true">
+                        Filter <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a><label><input name="filterme" id="filterme" type="checkbox"> By me</label></a></li>
+                        <li><a><label><input name="filterpublish" id="filterpublish" type="checkbox"> Show Published</label></a></li>
+                    </ul>
+                </div>
                 <input type="search" id="search" placeholder="search" class="form-control input-sm" />
 
                 <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -148,9 +148,13 @@ $(document).ready( function () {
             },
             dataSrc: 1
         },
+        "aLengthMenu": [[10, 15, 50, 75, -1], [10, 15, 50, 75, "All"]],
         "pageLength": 15,
         drawCallback: function(){
             $("img.xd-img").lazyload();
+        },
+        fnInitComplete : function( oSettings, json ){
+            $("#joborders_length select").detach().prependTo("#xd-page");
         }
     });
     var filteredjotable = jobordertable

@@ -95,7 +95,10 @@ $('#purchaseorders tbody tr').dblclick(function(){
         var potable = $('#purchaseorders').DataTable({
             "aLengthMenu": [[10, 25, 50, 75, -1], [10, 25, 50, 75, "All"]],
             "pageLength": 25,
-            "order": [[ 1, "asc" ]]
+            "order": [[ 1, "asc" ]],
+            fnInitComplete : function( oSettings, json ){
+                $("#purchaseorders_length select").detach().prependTo("#xd-page");
+            }
         });
 
 
@@ -151,7 +154,7 @@ $('#purchaseorders tbody tr').dblclick(function(){
                  //alert('no');
              }
          });
-         $(".nav-search input[type='search'").keyup(function() {
+         $("input[id='search'").keyup(function() {
             potable.search($(this).val()).draw();
          });
     

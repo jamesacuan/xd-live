@@ -1,5 +1,10 @@
 # changelog
 
+## [0.0.6] - 2018-07-13
+### changes
+- added quick links to JO and PO in homepage
+- [regression] view page selection to JO and PO list
+- [regression] search to PO list
 
 ## [0.0.5] - 2018-07-11
 ### Added
