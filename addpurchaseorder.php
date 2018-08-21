@@ -148,7 +148,7 @@ input.es-input.open {
                     <!--<input type="text" list="custom" required/>
                     <datalist id="custom"></datalist>
                     <div></div>-->
-                    <select class="form-control input-sm selectpicker" name="custom" id="custom">
+                    <select class="form-control input-sm" name="custom" id="custom">
                 </div>
             </div>
             <div class="form-group" id="item_quantity">
