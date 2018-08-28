@@ -42,28 +42,36 @@ if($num>0){
                 while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
                     extract($row2);
                     if($i < 4){
-                        $rss_desc = "<tr>";
+                    /*    $rss_desc = "<tr>";
                         if($image_url=="") $image_url = "def.png";
                         $rss_desc .= "<td><img src='" . $home_url . "images/thumbs/" . $image_url . "'/></td>";
                         $rss_desc .= "<td>" . $note . "</td>";
                         $rss_desc .= "<td>" . $status . "</td>";
                         $rss_desc .= "</tr>";
+                    */
+                    $rss_desc = "&lt;tr&gt;";
+                    if($image_url=="") $image_url = "def.png";
+                    $rss_desc .= "&lt;td&gt;&lt;img src='" . $home_url . "images/thumbs/" . $image_url . "'/>&lt;/td&gt;";
+                    $rss_desc .= "&lt;td&gt;" . $note . "&lt;/td&gt;";
+                    $rss_desc .= "&lt;td&gt;" . $status . "&lt;/td&gt;";
+                    $rss_desc .= "&lt;/tr&gt;";
                     }
+
                     else{
-                        $rss_desc .=  "<tr>";
-                        $rss_desc .=  "<td colspan=\"3\"><a href=\"" . $home_url . "joborder.php?&amp;id=" . $tempjod . "\" >Show All...</a></td>";
-                        $rss_desc .=  "</tr>";
                         break;
                     }
                     $i++;
                 }
             }
 
-            $rss .= '<description>
+            /*$rss .= '<description>
                 <![CDATA[
                 <table width="500" border="1">' . $rss_desc . '</table>
                 ]]></description>';
-
+*/
+            $rss .= '<description>
+                    <![CDATA[<table border="1">' . $rss_desc . '</table>;
+                    ]]></description>';
             $rss .= '<category>Job Order</category>';
             
         }
@@ -92,6 +100,9 @@ if($num>0){
                     $i++;
                 }
             }
+
+
+            
 
             $rss .= '<description>
                 <![CDATA[

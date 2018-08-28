@@ -1,0 +1,45 @@
+# changelog
+
+## [0.0.6] - 2018-07-13
+### changes
+- added quick links to JO and PO in homepage
+- [regression] view page selection to JO and PO list
+- [regression] search to PO list
+
+## [0.0.5] - 2018-07-11
+### Added
+- create New Product (if user is admin)
+- added filters in PO page
+- if PO is still on-queue, user can modify its quantity
+- if PO is still on-queue, user can still delete that item
+- if PO is in processing, hans can modify its quantity and can delete items inside PO
+- create thumbnail when uploading images (see note)
+- user can delete multiple JO and PO in JO and PO lists
+- hans can accept multiple JO and PO in JO and PO lists (see note)
+
+### Changed
+- base stylesheet is from v2
+- lazy load images in JO, PO and products page to improve performance
+- added logo
+- modified way when naming uploaded images.
+- changes PO table in activity stream
+- change assigned color in labels in PO
+- products page is listed alphabetically
+- paginate products page
+- [mobile] added horizontal scrollbar JO and PO tables
+- fix missing type when adding JO, added required option to type
+- added padding to add JO and PO
+
+### Notes
+- removed ability to accept PO and approve JO inside pages,
+this should be done in JO and PO lists
+- for now, we didn't use thumbnail when displaying images.
+
+### bugs
+1. site is unavailable when accessing in Ken's network
+2. feedback is added to different JO - cannot replicate
+3. JO status should be On-queue > In progress > Approved by Client > Publish - in progress
+4. settings page
+4. [feature] notification
+   a. push notification - in progress
+   b. email

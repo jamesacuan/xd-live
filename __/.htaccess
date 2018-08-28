@@ -1,0 +1,17 @@
+#Fix Rewrite
+Options -Multiviews
+ 
+# Mod Rewrite
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /XD/
+ 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+ 
+# used for php pages such as "yoursite.com/login.php" will become "yoursite.com/login/"
+RewriteRule ^([a-z_]+)\/?$ $1.php [NC]
+
+#DirectoryIndex 503.php index.html index.php
+
+ErrorDocument 404 http://taxcalculator.pe.hu/xd/404.php

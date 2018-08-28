@@ -6,20 +6,21 @@ $query = "SELECT * FROM `product_items` WHERE `type`= '" . $_POST["type"] ."' AN
 $result = mysqli_query($connect, $query);
 $opt1 = 0;
 $opt2 = 0;
+//$output .= "<select class=\"form-control input-sm selectpicker\" name=\"custom\" id=\"custom\">";
 while($row = mysqli_fetch_array($result)){
     if($row['visibility'] != 0 && $opt1 != 1) {
-        $output .= "<optgroup label='Personal'>";
+        //$output .= "<optgroup label='Personal'>";
         $opt1 = 1;
     }
     if($row['visibility'] == 0 && $opt2 != 1){
         if($opt1==1) $output .= "</optgroup>";
-        $output .= "<optgroup label='Public'>";
+        //$output .= "<optgroup label='Public'>";
         $opt2 = 1;
     }
     $output .= '<option/ value="'.$row["id"].'">'.$row["name"].'</option>';
 }
 $output .= "</optgroup>";
-
+//$output .= "</select>";
 echo $output;
 //echo "<option>test</option>";
 ?>

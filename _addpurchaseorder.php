@@ -1,5 +1,5 @@
 <?php
-include_once "functions/login_check.php";
+include_once "login_check.php";
 $require_login=true;
 
 include_once "config/core.php";
@@ -13,6 +13,11 @@ $db = $database->getConnection();
 
 $purchase_order = new PurchaseOrder($db);
 $page_title="Create New Purchase Order";
+
+include 'template/header.php';
+?>
+
+<?php
 
 if($_POST){
     $userid   = $_SESSION['userid'];
@@ -40,8 +45,8 @@ if($_POST){
         $purchase_order->product  = $product[$key];
         $purchase_order->type     = $type[$key];
         if($custom[$key]=="undefined")
-       print    $purchase_order->productitemid = 0;
-       else
+        print    $purchase_order->productitemid = 0;
+        else
         print    $purchase_order->productitemid = $custom[$key];
         $purchase_order->quantity = $quantity[$key];
         $purchase_order->color    = $color[$key];
@@ -50,15 +55,9 @@ if($_POST){
     }
 
     $purchase_order->status = "New";
-    $purchase_order->setStatus();
-    $_SESSION['modal'] = "Successfully added Purchase order #" . $poid . ".";
-    header("Location: {$home_url}purchaseorders.php");
+    $purchase_order->addStatus();
 }
-
-include 'template/header.php';
-
 ?>
-
 <div class="row xd-heading">
     <div class="clearfix">
         <div class="page-header pull-left">
@@ -68,12 +67,10 @@ include 'template/header.php';
 </div>
 
 <div class="row xd-content">
-<div class="col-md-12" style="padding:30px" >
-    <div align="right" style="margin-bottom:5px;">
-        <button type="button" name="add" id="add_item" class="btn btn-success" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+<div align="right" style="margin-bottom:5px;">
+    <button type="button" name="add" id="add_item" class="btn btn-success" data-toggle="modal" data-target="#addItemModal">Add Item</button>
    </div>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="purchase_order">
-<!--<form action="functions/post_purchaseorder.php" method="post" id="purchase_order">-->
     <table class="table table-hover table-bordered table-striped">
         <thead>
             <tr>
@@ -86,14 +83,14 @@ include 'template/header.php';
         </thead>
         <tbody id="po_table">      
         </tbody>
-    </table>
-    <div style="padding:20px 0" >
+    </table> 
+    <div>
      <input type="hidden" id="uid" value="<?php echo $_SESSION['userid'] ?>" /> 
-     <input type="submit" name="insert" id="insert" class="btn btn-primary" value="Submit" />
+     <input type="submit" name="insert" id="insert" class="btn btn-primary" value="Save" />
     </div>
 </form>
 </div>
-</div>
+
 <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -104,7 +101,7 @@ include 'template/header.php';
         <div class="modal-body form-horizontal">
             <p class="bg-danger" id="dialog_warn"></p>
             <div class="form-group" id="item_product">
-                <label class="control-label col-sm-3">Product<span class="required">*</span></label>
+                <label class="control-label col-sm-3">Product</label>
                 <div class="radio col-sm-9">
                         <label for="HH" class="radio-inline">
                             <input type="radio" value="HH" name="product" id="HH">Helmet Holder
@@ -115,7 +112,7 @@ include 'template/header.php';
                     </div>
                 </div>
             <div class="form-group" id="item_type">
-                <label class="control-label col-sm-3">Type<span class="required">*</span></label>
+                <label class="control-label col-sm-3">Type</label>
                 <div class="radio radio col-sm-9">
                         <label for="pln">
                             <input type="radio" value="plain" name="type" id="pln">Plain
@@ -126,19 +123,19 @@ include 'template/header.php';
                     </div>
             </div>
             <div class="form-group" id="item_color">
-                <label class="control-label col-sm-3">Color<span class="required">*</span></label>
+                <label class="control-label col-sm-3">Color</label>
                 <div class="col-sm-9">
                     <select class="form-control input-sm" name="color" id="colors"></select>
                 </div>
             </div>
             <div class="form-group" id="item_custom">
-                <label class="control-label col-sm-3">Custom Logo<span class="required">*</span></label>
+                <label class="control-label col-sm-3">Custom Logo</label>
                 <div class="col-sm-9">
                     <select class="form-control input-sm" name="custom" id="custom"></select>
                 </div>
             </div>
             <div class="form-group" id="item_quantity">
-                <label class="control-label col-sm-3">Quantity<span class="required">*</span></label>
+                <label class="control-label col-sm-3">Quantity</label>
                 <div class="col-sm-9">
                     <input type="number" name="quantity" class="form-control" min="1" />
                 </div>
@@ -153,12 +150,16 @@ include 'template/header.php';
 
         <div class="modal-footer">
             <input type="hidden" name="row_id" id="hidden_row_id" />
-            <button type="button" name="save" id="save" class="btn btn-info">Add Item</button>
+            <button type="button" name="save" id="save" class="btn btn-info">Save</button>
         </div>
         </div>
     </div>
+
+
+
+
 </div>
-<script src="assets/js/po_script.js"></script>
+<script src="js/po_script.js"></script>
 
 <?php 
 include 'template/footer.php';
