@@ -1,5 +1,5 @@
-//var home_url = "http://localhost/xd-live/";
-var home_url = "http://taxcalculator.pe.hu/";
+var home_url = "http://localhost/xd-live/";
+//var home_url = "http://taxcalculator.pe.hu/";
 
 $('#image').on('shown.bs.modal', function (event) {
     var button   = $(event.relatedTarget);
