@@ -1,7 +1,0 @@
-# Ignore everything
-/v1/images
-/v2/images
-/images
-
-# Except
-!/images/def.png
