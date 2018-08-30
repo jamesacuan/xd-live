@@ -27,12 +27,11 @@ include_once "login_check.php";
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen" />   
     <link href="assets/css/datatables.css" rel="stylesheet" />
-    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="assets/css/dataTables.bootstrap.min.css" rel="Stylesheet" />
     <link href="assets/favicon.png" rel="shortcut icon" />
-    <link href="assets/css/style.css" rel="stylesheet" />
     <script src="assets/js/jquery-3.2.1.js"></script>
-
+    <link href="lib/css/material.bootstrap.css" rel="stylesheet" />
+    <link href="lib/css/ripples.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -126,14 +125,15 @@ li{
               Another headers
             </div>
             <div class="" style="border: 1px solid blue">
-              another one
+            <div class="form-group">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#simple-dialog">Open dialog</button>            </div>
             </div>
 			<div class="xd2-content">
                 <div class="content">
                 <table id="joborders" class="table table-hover">
                     <thead style="background-color: #fff">
                         <tr>
-                            <th class="col-xs-1"><input type="checkbox" /></th>
+                            <th class="col-xs-1 form-group"><div class="checkbox"><label><input type="checkbox" /></label></div></th>
                             <th>JO</th>
                             <th class="col-xs-1">Image</th>
                             <th class="col-xs-1">Code</th>
@@ -254,21 +254,18 @@ li{
 
 
               <div class="sidenav">
-				<p>one</p>
-				<p>two</p>
-				<p>three</p>
-                <p>one</p>
-				<p>two</p>
-				<p>three</p>
-                <p>one</p>
-				<p>two</p>
-				<p>three</p>
+              <div class="form-group label-floating is-empty">
+                <label for="i5" class="control-label">label-floating</label>
+                <input class="form-control" id="i5" type="email">
+                <span class="help-block">This is a hint as a <code>span.help-block.hint</code></span>
+              </div>
              </div>
           </div>
             
 		</div>
-        <script src="assets/js/joborders.js"></script>
+        <script src="lib/js/material.js"></script>
+        <script src="lib/js/ripples.min.js"></script>
+<script>
+$.material.init()
+</script>
 
-<?php
-include 'template/footer.php';
-?>
