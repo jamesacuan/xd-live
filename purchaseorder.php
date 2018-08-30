@@ -302,6 +302,12 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
         echo "</div>";
 
     ?>
+    <tfoot>
+        <td class="col-xs-10" colspan="4"><span class="pull-right">Total</span>
+        </td>
+        <td class="col-xs-2">
+        </td>
+    </tfoot>
     </tbody>
     </table>
         </div>
