@@ -56,45 +56,53 @@ $(function() {
     $('span.required').parent().attr('title','this field is required');
 
     $("img.xd-img").lazyload();
+});
 
-    var availableTags = [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-      ];
+/*var availableTags = 
+        [
+            {
+              "name": "MAYHEM",
+              "id": "5"
+            },
+            {
+              "name": "kawasexy",
+              "id": "6"
+            },
+            {
+              "name": "O'NEAL BLU_WHT",
+              "id": "7"
+            },
+            {
+              "name": "Versys 1000",
+              "id": "8"
+            },
+            {
+              "name": "Kawasaki_GreenStripes",
+              "id": "9"
+            },
+            {
+              "name": "HJC_BLUEWhite",
+              "id": "10"
+            },
+            {
+              "name": "NE77276",
+              "id": "11"
+            },
+            {
+              "name": "Kawasaki Z650",
+              "id": "12"
+            }
+          ];
 
       $(".nav-search input[type='search']").autocomplete({
         source: 'http://localhost/xd-live/functions/autocomplete.php',
-
-        /*source: function (request, response){
-            $.ajax({
-                url: 'http://localhost/xd-live/functions/autocomplete.php',
-                type: "GET"
-            });
-        },*/
+        //source: availableTags,
         select: function (event, ui) {
             event.preventDefault();
             this.value = ui.item.name;
-            alert(ui.item.value);
+            //alert(ui.item.value);
         }
-      });
-});
+      });*/
+
+
+    
