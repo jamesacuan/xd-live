@@ -26,7 +26,6 @@ $(document).ready( function () {
     
 });
 
-
 moment().format();
 setMoment();
 function setMoment(){
@@ -58,4 +57,44 @@ $(function() {
 
     $("img.xd-img").lazyload();
 
+    var availableTags = [
+        "ActionScript",
+        "AppleScript",
+        "Asp",
+        "BASIC",
+        "C",
+        "C++",
+        "Clojure",
+        "COBOL",
+        "ColdFusion",
+        "Erlang",
+        "Fortran",
+        "Groovy",
+        "Haskell",
+        "Java",
+        "JavaScript",
+        "Lisp",
+        "Perl",
+        "PHP",
+        "Python",
+        "Ruby",
+        "Scala",
+        "Scheme"
+      ];
+
+      $(".nav-search input[type='search']").autocomplete({
+        source: 'http://localhost/xd-live/functions/autocomplete.php',
+
+        /*source: function (request, response){
+            $.ajax({
+                url: 'http://localhost/xd-live/functions/autocomplete.php',
+                type: "GET"
+            });
+        },*/
+        select: function (event, ui) {
+            event.preventDefault();
+            this.value = ui.item.name;
+            alert(ui.item.value);
+        }
+      });
 });

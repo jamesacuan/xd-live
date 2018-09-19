@@ -442,6 +442,9 @@ body {
 nav.navbar .navbar-toggle .icon-bar{
 	background-color: #fff;
 }
+.navbar .nav-search{
+	margin: 9px 0 0 0;
+}
 nav.navbar .nav-search input[class="form-control"] {
 	background-color: #282e6c;
 	border: 1px solid #3b4180;
@@ -685,7 +688,12 @@ li.active #xd-list-products i.glyphicon{
 	font-size: 13px;
 }
 .xd-product h4{
-	font-size: 16px;
+	font-size: 14px;
+	clear: both;
+	display: inline-block;
+	text-overflow: clip;
+	white-space: nowrap;
+	width: 100%;
 }
 .xd-product p{
 	font-size:12px;

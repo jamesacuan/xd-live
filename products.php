@@ -19,8 +19,8 @@ include 'template/header.php'
 
 <div class="container">
 <div class="row">
-<!--
-    div class="col-md-3">
+
+    <div class="col-md-3">
         <div class="thumbnail panel panel-default">
             <div class="caption">
                 <span><?php echo $product->getItemCount('')?></span>
@@ -32,8 +32,8 @@ include 'template/header.php'
             </ul>
         </div>
     </div>
-    -->
-    <div class="col-md-12">
+    
+    <div class="col-md-9">
     <div class="row">
     <?php   
             $total_rows = $product->getProductItemsCount();  
@@ -44,7 +44,7 @@ include 'template/header.php'
             if($num>0){
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     extract($row);
-                    echo "<div class=\"col-xs-6 col-sm-4 col-md-3 xd-product\">";
+                    echo "<div class=\"col-sm-3 col-md-3 xd-product\">";
                     echo "<div class=\"thumbnail  xd-product-thumbnail\">";
                     if($image_url=="none") echo  "<img src=\"{$home_url}images/def.png\">";
                     else   echo  "<img data-src=\"{$home_url}images/{$image_url}\" class=\"xd-img\">";

@@ -26,7 +26,7 @@
  
             <a class="navbar-brand" href="<?php echo $home_url; ?>"><img src="<?php echo $home_url . "assets/images/logo-xs.png"; ?>" alt="HANC" /></a>
         </div>
- 
+
         <div class="xd-nav navbar-collapse collapse">
         <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true){ ?>
             <ul class="nav navbar-nav xd-main-menu">
@@ -43,6 +43,27 @@
                     <?php echo "<a href=\"{$home_url}products.php\">Products</a>"?>
                 </li>
             </ul>
+
+
+            <div class="nav-search col-md-5">
+            <div class="input-group">
+                <input type="search" class="form-control" accesskey="/" />
+                <?php
+                /*
+                <div class="input-group-btn">
+                    <button type="button" id="xd-navbar-search-button" class="btn btn-default xd-btn-search dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        
+                    </ul>
+                </div>
+                */
+                ?>
+            </div>
+            </div>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">

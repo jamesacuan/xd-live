@@ -17,17 +17,16 @@ include 'template/header.php';
 ?>
 
 <div class="row xd-heading">
-    <div class="clearfix">
-        <div class="page-header pull-left">
-            <h1><?php echo isset($page_title) ? $page_title : "Index"; ?></h1>
-        </div>
-        <div class="btn-group pull-right">
-            <?php if($_SESSION['role']=="user")
-                echo "<button type=\"button\" onclick=\"location.href='addpurchaseorder.php'\" class=\"btn btn-primary pull-right\">+ Purchase Order</button>";
-            ?>
-        </div>
-        
-    </div>
+   <div class="clearfix">
+      <div class="page-header pull-left">
+         <h1><?php echo isset($page_title) ? $page_title : "Index"; ?></h1>
+      </div>
+      <div class="btn-group pull-right">
+         <?php if($_SESSION['role']=="user")
+               echo "<button type=\"button\" onclick=\"location.href='addpurchaseorder.php'\" class=\"btn btn-primary pull-right\">+ Purchase Order</button>";
+         ?>
+      </div>
+   </div>
 </div>
 
 <div class="row xd-content">
