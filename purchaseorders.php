@@ -109,7 +109,8 @@ include 'template/header.php';
                             else echo "<input type=\"checkbox\" name=\"JOH[]\" disabled>";
                             
                             echo "</td>";
-                        echo "<td>{$id}</td>";
+                            //data-remote false to disable deprecated bootstrap load function
+                        echo "<td><a href=\"#\" data-toggle=\"modal\" data-remote=\"false\" data-target=\"#preview\">{$id}</a></td>";
                         echo "<td>{$nickname}</td>";
                         echo "<td><span class=\"dtime\"  data-toggle=\"tooltip\" title=\"" . date_format(date_create($created),"F d, Y h:i:s A") . "\">" . date_format(date_create($created),"m-d-Y h:i:s A") . "</span>";
                         if(($diff->d)>4 && ($status!="Denied" && $status != 'paid')){
@@ -155,6 +156,23 @@ include 'template/header.php';
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="preview" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">Heads up!</h4>
+      </div>
+      <div class="modal-body">
+          <p>tests</p>
+       </div>
+    </div>
+  </div>
+</div>
+
+
         </div>
     </div>
 </div>

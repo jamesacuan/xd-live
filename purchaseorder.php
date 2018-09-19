@@ -159,6 +159,13 @@ include 'template/header.php';
                             <?php if (($role=='hans') && ($purchase_order->status=='processing' || $purchase_order->status=='delivered')){ //for now  ?>
                             <a href="<?php echo "{$home_url}purchaseorder.php?&id={$poid}&status=paid";?>" class="btn btn-primary" data-toggle="tooltip" title="This will permanently close the PO and considered as paid and delivered."><span class="glyphicon glyphicon-ok"></span> Paid</a>
                             <?php } ?>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                 <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo "{$home_url}functions/export.php?&id={$poid}";?>">Export...</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -302,13 +309,16 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
         echo "</div>";
 
     ?>
+    </tbody>
     <tfoot>
-        <td class="col-xs-10" colspan="4"><span class="pull-right">Total</span>
-        </td>
-        <td class="col-xs-2">
+        <td colspan="4"><span class="pull-right">Total</span></td>
+        <td>
+        <?php
+        $stmt = $purchase_order->readPOSum($poid);
+        echo $purchase_order->sum;
+        ?>
         </td>
     </tfoot>
-    </tbody>
     </table>
         </div>
     </div>
@@ -361,9 +371,6 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
     </div>
   </div>
 </div>
-
-
-
 
 <script src="assets/js/pod_script.js"> </script>
 <?php include_once 'template/footer.php' ?>

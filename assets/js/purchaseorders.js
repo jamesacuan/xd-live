@@ -91,6 +91,28 @@ $('#purchaseorders tbody tr').dblclick(function(){
     window.location = home_url + "purchaseorder.php?&id=" + id;
 })
 
+
+$("#preview").on("show.bs.modal", function(e) {
+    var link = $(e.relatedTarget);
+    //$(this).find(".modal-body").load(link.attr("href"));
+    fetch_preview(link.text());
+    $(this).find(".modal-title").html("<a href=\"purchaseorder.php?&amp;id=" +link.text()+ "\"><h4>PO - " + link.text() + "</h4></a>");
+});
+
+
+function fetch_preview(data){
+    console.log(data);
+    $.ajax({
+        url:"functions/fetch_purchaseorder_preview.php",
+        method:"POST",
+        data:{code:data},
+        success:function(data){
+            $('#preview .modal-body').html(data);
+        }
+    })
+   }
+
+
     $(document).ready(function(){
         var potable = $('#purchaseorders').DataTable({
             "aLengthMenu": [[10, 25, 50, 75, -1], [10, 25, 50, 75, "All"]],

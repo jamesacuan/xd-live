@@ -18,6 +18,7 @@ class PurchaseOrder{
     public $status;
     public $total;
     public $type;
+    public $sum;
     public $PODID, $POID;
     public $purchase_orderid;
     public $productname;
@@ -398,6 +399,47 @@ class PurchaseOrder{
         $this->color        = $row['color'];
         $this->note         = $row['note'];
         $this->productname  = $row['productname'];
+
+        $stmt->execute();
+        return $stmt;
+    }
+
+    function readPOSum($POID){
+        $query = "SELECT sum(quantity) as sum from (
+            SELECT p1.`id`,
+                    p1.`product`,
+                    p1.`type`,
+                    p1.`quantity`,
+                    product_color.name as color,
+                    p1.`note`,
+                    product_items.name as productname,
+                    product_items.`image_url`
+                    FROM purchase_order_details p1
+                    JOIN product_color ON product_color.id = p1.color
+                    JOIN product_items ON p1.productitemid = product_items.id
+                    WHERE p1.`purchase_orderid` = $POID
+                    AND p1.isDeleted <> 'Y'
+             UNION
+             SELECT p2.`id`,
+                    p2.`product`,
+                    p2.`type`,
+                    p2.`quantity`,
+                    product_color.name as color,
+                    p2.`note`,
+                    p2.`productitemid` as productname,
+                    p2.`productitemid` as image_url
+                    FROM purchase_order_details p2
+                    JOIN product_color ON product_color.id = p2.color
+                    WHERE (p2.productitemid = '0' OR p2.productitemid = 'undefined') AND
+                    p2.`purchase_orderid` = $POID
+                   AND p2.isDeleted <> 'Y'
+            )SUM_PURCHASE_ORDER";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->sum          = $row['sum'];
 
         $stmt->execute();
         return $stmt;
