@@ -404,6 +404,79 @@ class PurchaseOrder{
         return $stmt;
     }
 
+    function readPOItem2($POID){
+        $query = "SELECT 
+        p1.`product`,
+        p1.`type`,
+        p1.`note`,
+        p1.productitemid,
+        product_items.name as productname,
+        product_items.`image_url`
+        FROM purchase_order_details p1
+        JOIN product_color ON product_color.id = p1.color
+        JOIN product_items ON p1.productitemid = product_items.id
+        WHERE p1.`purchase_orderid` = $POID
+        AND p1.isDeleted <> 'Y'
+UNION
+SELECT p2.`product`,
+        p2.`type`,
+        p2.`note`,
+        p2.productitemid,
+        p2.`productitemid` as productname,
+        p2.`productitemid` as image_url
+        FROM purchase_order_details p2
+        JOIN product_color ON product_color.id = p2.color
+        WHERE (p2.productitemid = '0' OR p2.productitemid = 'undefined') AND
+        p2.`purchase_orderid` = $POID
+        AND p2.isDeleted <> 'Y'
+        ORDER BY productname";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->type         = $row['type'];
+        $this->image_url     = $row['image_url'];
+        $this->note         = $row['note'];
+        $this->productname  = $row['productname'];
+
+        $stmt->execute();
+        return $stmt;
+
+    }
+
+    function getPOItemQuantityByColor($POID, $PODID, $color){
+        $query = "SELECT p1.quantity
+         FROM purchase_order_details p1
+         JOIN product_color ON product_color.id = p1.color
+         JOIN product_items ON p1.productitemid = product_items.id
+         WHERE p1.`purchase_orderid` = $POID
+         AND productitemid = $PODID
+         AND product_color.name = '{$color}'
+         AND p1.isDeleted <> 'Y'
+         UNION
+         SELECT p2.quantity
+         FROM purchase_order_details p2
+         JOIN product_color ON product_color.id = p2.color
+         WHERE (p2.productitemid = '0' OR p2.productitemid = 'undefined') AND
+         p2.`purchase_orderid` = $POID
+         AND productitemid = $PODID
+         AND product_color.name = '{$color}'
+         AND p2.isDeleted <> 'Y'";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();   
+        $num = $stmt->rowCount();
+    
+        if($num>0){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //$this->tycount = $row['quantity'];
+            return $row['quantity'];;
+        }
+        return false;
+
+    }
+
     function readPOSum($POID){
         $query = "SELECT sum(quantity) as sum from (
             SELECT p1.`id`,
@@ -443,6 +516,27 @@ class PurchaseOrder{
 
         $stmt->execute();
         return $stmt;
+    }
+
+
+    function getPOSumByColor($POID, $color){
+        $query = "SELECT sum(quantity) as sum
+        FROM purchase_order_details
+        JOIN product_color ON product_color.id = purchase_order_details.color
+        WHERE purchase_order_details.`purchase_orderid` = $POID
+        AND product_color.name = '$color'
+        AND purchase_order_details.isDeleted <> 'Y'";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();   
+        $num = $stmt->rowCount();
+
+        if($num>0){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //$this->tycount = $row['quantity'];
+            return $row['sum'];;
+        }
+        return false;
     }
 
     function updateQty(){

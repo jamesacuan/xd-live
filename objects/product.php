@@ -9,6 +9,7 @@ class Product{
     public $productitemname;
     public $visibility; //userid
     public $image_url;
+    public $name;
     public $code; //joborderdetails.code
     public $created, $modified, $isDeleted;
     public $jodid; //joborderdetails_id
@@ -18,6 +19,7 @@ class Product{
     public $productcategory;
     public $note;
     public $userid;
+    public $jod_id;
 
     public function __construct($db){
         $this->conn = $db;
@@ -162,8 +164,31 @@ class Product{
         }
         return false;
     }
-    function readItems($from_record_num, $records_per_page){
+
+    function getProductItem($id){
+        $query = "SELECT 
+        product_items.name,
+        product_items.image_url,
+        product_items.jodid,
+        product_items.type
+        FROM product_items
+        WHERE product_items.id = $id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();   
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->name      = $row['name'];
+        $this->image_url = $row['image_url'];
+        $this->jod_id    = $row['jodid'];
+
+        $stmt->execute();
+        return $stmt;
+    }
+
+    function readItems($type, $from_record_num, $records_per_page){
         $query = "SELECT
+                product_items.id,
                 product_items.`name`,
                 product_items.`image_url`,
                 product_items.`modified`,
@@ -171,7 +196,8 @@ class Product{
                 product_items.`type`,
                 product_items.visibility
                 FROM product_items
-                WHERE product_items.isDeleted <> 'Y'
+                WHERE product_items.isDeleted <> 'Y' AND
+                product_items.type LIKE '%{$type}%'
                 ORDER BY product_items.name ASC
                 limit {$from_record_num}, {$records_per_page}";
 
@@ -184,10 +210,11 @@ class Product{
         return $stmt;
     }
 
-    function getProductItemsCount(){
+    function getProductItemsCount($type){
         $query = "SELECT 
             count(*) as total
-            FROM product_items";
+            FROM product_items
+            WHERE product_items.type LIKE '%{$type}%'";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -196,7 +223,8 @@ class Product{
         $this->name  = $row['total'];
         return $this->name;
     }
-        function getItemCount($type){
+    
+    function getItemCount($type){
         $query = "SELECT max(id) AS total
                 FROM product_items 
                 WHERE product_items.type='{$type}'";
@@ -209,6 +237,29 @@ class Product{
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->answer = $row['total'];
             return $this->answer;
+        }
+        return false;
+    }
+
+    function delete(){
+        $this->modified = date('Y-m-d H:i:s');
+        $query = "UPDATE product_items
+                 SET
+                    isDeleted   = 'Y',
+                    modified    = :modified
+                 WHERE
+                    id          = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->modified          = htmlspecialchars(strip_tags($this->modified));
+        $this->productitemid     = htmlspecialchars(strip_tags($this->productitemid));
+
+        $stmt->bindParam(':modified', $this->modified);
+        $stmt->bindParam(':id',       $this->productitemid);
+
+        if($stmt->execute()){
+            return true;
         }
         return false;
     }

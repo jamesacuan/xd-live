@@ -4,6 +4,7 @@ include_once "config/core.php";
 include_once "config/database.php";
 include_once "objects/job_order.php";
 include_once "objects/purchase_order.php";
+include_once "objects/product.php";
 include_once "objects/settings.php";
 
 $database = new Database();
@@ -11,6 +12,7 @@ $db = $database->getConnection();
 
 $job_order = new JobOrder($db);
 $settings =  new Settings($db);
+$product =  new Product($db);
 $purchase_order = new PurchaseOrder($db);
 
 $page_title= "Dashboard";
@@ -84,9 +86,9 @@ echo "</div>";
     <h3>Activity</h3>
 
         <?php
-        echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
+        //echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
         //if($_SESSION["admin"]=='Y')
-            $stmt = $job_order->readJODActivityStream();
+        $stmt = $job_order->readJODActivityStream();
         //else
             //$stmt = $job_order->readJODwithUserandStatus($_SESSION['userid'], "For Approval");
         $num  = $stmt->rowCount();
@@ -184,8 +186,30 @@ echo "</div>";
                     echo "</table>";
                     echo "</div>";
                 }
+                else if($XTABLE == "PRD"){
+                    $test = $ID;
+                                       
+                    $product->getProductItem($test);
+                    
+                            
+                    echo "<div class=\"panel panel-warning\" style=\"margin:30px 0\">";
+                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
+                        if ($product->image_url == "none" || !isset($product->image_url))
+                            $image_url = "def.png";
+                        //echo "<div><img class=\"img-rounded\"  width=\"40\" height=\"40\" /></div>";
+                        echo "<div class=\"pull-left\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /> </div>";
+                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\"></div>";
+                        echo "<div class=\"pull-left\" style=\"margin-left: 20px\">";
+                            //echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
+                            echo "<h4 style=\"margin: 2px 0\">" . $product->name . "</h4>";
+                            //echo "</a>";
+                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
+                        echo $product->jod_id . "</div></div>";
+                    echo "</div>";
+                }
             }
         }
+        
         else echo "<div class='alert alert-info'>No recent activity.</div>";
         
         ?>

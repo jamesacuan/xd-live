@@ -1,5 +1,24 @@
 # changelog
 
+## [0.0.7] - 2018-09-23
+#### ADD PURCHASE ORDER PAGE:
+- Colors for HH should be Blue, White, Gray
+- Colors for TH should be Black
+- Remove deleted PRODUCTS from selection
+
+#### PRODUCTS
+- add HH and TH filter
+- show number of HH/TH when filtered
+- change layout, reduce text size
+- some dropdwon for delete (not yet working)
+
+#### PURCHASE ORDERS list PAGE
+- show quick info
+
+#### PURCHASE ORDER PAGE
+- added sumtotal of quantity
+- added another table
+
 ## [0.0.6] - 2018-07-13
 ### changes
 - added quick links to JO and PO in homepage
@@ -43,3 +62,8 @@ this should be done in JO and PO lists
 4. [feature] notification
    a. push notification - in progress
    b. email
+5. notification
+    a. for every comment
+    b. for every new PO
+    c. for every new JO
+    d. for every new Product published

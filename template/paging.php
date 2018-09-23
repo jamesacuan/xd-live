@@ -1,8 +1,15 @@
 <?php
 echo "<ul class=\"pagination\">";
- 
+
+if (!isset($_GET['type'])){
+    $qtype = "";
+}
+else{
+    $qtype = "&type=" . $type;
+}
+
 if($page>1){
-    echo "<li><a href='{$page_url}' title='Go to the first page.'>";
+    echo "<li><a href='{$page_url}" . $qtype . "' title='Go to the first page.'>";
         echo "First Page";
     echo "</a></li>";
 }
@@ -23,13 +30,13 @@ for ($x=$initial_num; $x<$condition_limit_num; $x++) {
         }
  
         else {
-            echo "<li><a href='{$page_url}page=$x'>$x</a></li>";
+            echo "<li><a href='{$page_url}page=$x" . $qtype . "'>$x</a></li>";
         }
     }
 }
  
 if($page<$total_pages){
-    echo "<li><a href='" .$page_url . "page={$total_pages}' title='Last page is {$total_pages}.'>";
+    echo "<li><a href='" .$page_url . "page={$total_pages}" . $qtype . "' title='Last page is {$total_pages}.'>";
         echo "Last Page";
     echo "</a></li>";
 }

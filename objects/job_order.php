@@ -542,7 +542,7 @@ class JobOrder{
                           WHERE s2.job_order_code = s1.job_order_code)
         ORDER BY job_order_details.modified DESC";*/
 
-        $query = "SELECT job_order.id as ID,
+        /*$query = "SELECT job_order.id as ID,
         CONCAT('JO') as XTABLE,
         users.nickname,
         job_order.created as created
@@ -558,7 +558,57 @@ class JobOrder{
        JOIN users ON users.userid = purchase_order.userid
        WHERE purchase_order.isDeleted <> 'Y'
        ORDER BY created DESC
-       LIMIT 20";
+       LIMIT 20*/
+       
+       
+       $query = "SELECT job_order.id as ID,
+       CONCAT('JO') as XTABLE,
+       users.nickname,
+       job_order.created as created
+       FROM job_order
+       JOIN users ON users.userid = job_order.userid
+       WHERE job_order.isDeleted <> 'Y'
+        UNION
+        SELECT purchase_order.id as ID,
+            CONCAT('PO') as XTABLE,
+            users.nickname,
+            purchase_order.created as created
+            FROM purchase_order
+            JOIN users ON users.userid = purchase_order.userid
+            WHERE purchase_order.isDeleted <> 'Y'
+        UNION
+        SELECT
+        id,
+        CONCAT('PRD') as XTABLE,
+        nickname,
+        created
+        FROM (SELECT
+        product_items.id,
+        product_items.name,
+        product_items.image_url,
+        product_items.created,
+        product_items.jodid,
+        users.nickname
+        FROM `product_items`
+        JOIN job_order_details ON job_order_details.id = product_items.jodid
+        JOIN job_order ON job_order.id = job_order_details.job_orderid
+        JOIN users ON users.userid = job_order.userid
+        WHERE product_items.isDeleted <> 'Y'
+
+        UNION ALL
+
+        SELECT
+        product_items.id,
+        product_items.name,
+        product_items.image_url,
+        product_items.created,
+        'manual',
+        'manual'
+        FROM `product_items`
+        WHERE product_items.isDeleted <> 'Y' AND
+            product_items.jodid = 0)TEST
+        ORDER BY created DESC
+        LIMIT 50";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

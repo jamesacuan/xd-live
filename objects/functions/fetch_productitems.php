@@ -1,7 +1,7 @@
 <?php
 include('dbcon.php');
 
-$query = "SELECT * FROM `product_items` WHERE `type`= '" . $_POST["type"] ."' AND ( visibility = " . $_POST["id"] ." OR visibility = 0 ) ORDER BY visibility DESC, name ASC";
+$query = "SELECT * FROM `product_items` WHERE isDeleted <> 'Y' AND `type`= '" . $_POST["type"] ."' AND ( visibility = " . $_POST["id"] ." OR visibility = 0 ) ORDER BY visibility DESC, name ASC";
 //$query = "SELECT * FROM `product_items` WHERE `type`= '" . $_POST["type"] ."' ORDER BY name ASC";
 $result = mysqli_query($connect, $query);
 $opt1 = 0;

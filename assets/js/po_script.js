@@ -18,8 +18,9 @@ $(document).ready(function(){
    
     $('input[name="product"]').click(function(){
        $('#item_type').show();
+       type=$('input[name="product"]:checked').val();
+       fetch_colors(type);
        $('#item_color').show();
-       fetch_colors();
        $('#item_custom').hide();
        $('input[name="type"]').prop('checked',false);
     });
@@ -184,7 +185,6 @@ $(document).ready(function(){
        }
     });
    
-   
    function clearAddDialog(){
        $('input[name="product"]').prop('checked',false);
        $('input[name="type"]').prop('checked',false);
@@ -211,6 +211,7 @@ $(document).ready(function(){
     $.ajax({
         url:"objects/functions/fetch_colors.php",
         method:"POST",
+        data:{type:type},
         success:function(data){
             $('#colors').html(data);
         }

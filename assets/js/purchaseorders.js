@@ -99,7 +99,6 @@ $("#preview").on("show.bs.modal", function(e) {
     $(this).find(".modal-title").html("<a href=\"purchaseorder.php?&amp;id=" +link.text()+ "\"><h4>PO - " + link.text() + "</h4></a>");
 });
 
-
 function fetch_preview(data){
     console.log(data);
     $.ajax({

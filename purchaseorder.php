@@ -159,13 +159,14 @@ include 'template/header.php';
                             <?php if (($role=='hans') && ($purchase_order->status=='processing' || $purchase_order->status=='delivered')){ //for now  ?>
                             <a href="<?php echo "{$home_url}purchaseorder.php?&id={$poid}&status=paid";?>" class="btn btn-primary" data-toggle="tooltip" title="This will permanently close the PO and considered as paid and delivered."><span class="glyphicon glyphicon-ok"></span> Paid</a>
                             <?php } ?>
-                            <div class="btn-group">
+                            <!--<div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                  <span class="caret"></span></button>
                                 <ul class="dropdown-menu" role="menu">
                                 <li><a href="<?php echo "{$home_url}functions/export.php?&id={$poid}";?>">Export...</a></li>
                                 </ul>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -241,88 +242,163 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
 </div>
 
 <?php } ?>
-<div class="row">
-    <div class="col-md-12">
-    <table id="purchaseorder" class="table table-hover table-bordered table-striped">
-        <thead>
-            <tr>
-                <th class="col-xs-1">#</th>
-                <th class="col-xs-3">Name</th>
-                <th class="col-xs-2">Custom</th>
-                <th class="col-xs-2">Color</th>
-                <th class="col-xs-2">Quantity</th>
-                <?php
-                if(($purchase_order->username == $_SESSION['username'] && ($purchase_order->status=="New" || $purchase_order->status=="On-queue")) || ($role=="hans" && ($purchase_order->status=='processing' || $purchase_order->status=='delivered'))) 
-                    {
-                ?>
-                <th class="col-xs-2">Action</th>
-                <?php
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-pills pull-right" role="tablist">
+    <li class="active"><a href="#view1" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span></a></li>
+    <li><a href="#view2" data-toggle="tab"><span class="glyphicon glyphicon-th"></span></a></li>
+ </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="view1">
+        <div class="row">
+            <div class="col-md-12">
+            <table id="purchaseorder" class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-xs-1">#</th>
+                        <th class="col-xs-3">Name</th>
+                        <th class="col-xs-2">Custom</th>
+                        <th class="col-xs-2">Color</th>
+                        <th class="col-xs-2">Quantity</th>
+                        <?php
+                        if(($purchase_order->username == $_SESSION['username'] && ($purchase_order->status=="New" || $purchase_order->status=="On-queue")) || ($role=="hans" && ($purchase_order->status=='processing' || $purchase_order->status=='delivered'))) 
+                            {
+                        ?>
+                        <th class="col-xs-2">Action</th>
+                        <?php
+                            }
+                        ?>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+            <?php       
+                $stmt = $purchase_order->readPOItem($poid);
+                $num  = $stmt->rowCount();
+                //echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
+                
+                if($num>0){
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        echo "<tr data-id=\"" . $id . "\">";
+                        //echo "<td>{$i}</td>";
+                        if((strpos($image_url, "define") == true ) || $image_url=='none' || $image_url=='0' || $image_url=='undefined')
+                            echo "<td><img src=\"{$home_url}images/def.png\" width=\"75\" height=\"75\" /></td>";
+                        else
+                            echo "<td><img src=\"{$home_url}images/thumbs/{$image_url}\" width=\"75\" height=\"75\" /></td>";
+                        echo "<td><b>";
+                        if($product == "HH") echo "Helmet Holder";
+                        else if($product == "TH") echo "Ticket Holder";
+                        echo "</b>";
+                        if(!empty($note))echo "<p>Note: {$note}</p></td>";
+                        echo "<td class=\"xd-custom\">";
+                        if(strpos($productname, "define") == true || $productname=='0') echo "Plain";
+                        else echo "{$productname} </td>";
+                        echo "<td class=\"xd-color\">{$color}</td>";
+                        echo "<td><span class=\"xd-qty\">{$quantity}</span></td>";
+
+                        if(($purchase_order->username == $_SESSION['username'] && ($purchase_order->status=="New" || $purchase_order->status=="On-queue")) || ($role=="hans" && ($purchase_order->status=='processing' || $purchase_order->status=='delivered'))) 
+                            {
+                        echo "<td>";
+                        echo "<button data-id={" . $id . "} data-toggle=\"modal\" data-target=\"#edit\" class=\"btn btn-sm btn-edit-qty btn-default\">Edit Quantity</button> ";
+                        echo "<button data-toggle=\"modal\" data-target=\"#warn\" class=\"btn btn-sm btn-delete btn-danger\">Delete</button>";
+                        echo "</td>";
+                            }
+
+                        echo "</tr>";
+                        $i+=1;
+                        //echo $num;
                     }
+                    
+                }
+                else{
+                    echo "<div class='alert alert-info'>No products found.</div>";
+                }
+                //echo "</div>";
+
+            ?>
+            </tbody>
+            <tfoot>
+                <td colspan="4"><span class="pull-right">Total</span></td>
+                <td>
+                <?php
+                $stmt = $purchase_order->readPOSum($poid);
+                echo $purchase_order->sum;
                 ?>
-            </tr>
-        </thead>
-        <tbody>
+                </td>
+            </tfoot>
+            </table>
+                </div>
+        </div><!--end of view1-->
+    </div><!--end of tab1-->
+    <div role="tabpanel" class="tab-pane" id="view2">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="purchaseorder" class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">#</th>
+                            <th class="col-xs-4">Logos</th>
+                            <th class="col-xs-2"><div style="width: 14px; height: 14px; display: block; border: 1px solid #333; background-color: #fff" class="pull-left"></div>&nbsp; White</th>
+                            <th class="col-xs-2"><div style="width: 14px; height: 14px; display: block; border: 1px solid #333; background-color: #00f" class="pull-left"></div>&nbsp; Blue</th>
+                            <th class="col-xs-2"><div style="width: 14px; height: 14px; display: block; border: 1px solid #333; background-color: #aaa" class="pull-left"></div>&nbsp; Gray</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $stmt = $purchase_order->readPOItem2($poid);
+                        $num  = $stmt->rowCount();
+                        
+                        if($num>0){
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                extract($row);
+                                if($product == "HH"){
+                                    echo "<tr>";
+                                    if((strpos($image_url, "define") == true ) || $image_url=='none' || $image_url=='0' || $image_url=='undefined')
+                                        echo "<td><img src=\"{$home_url}images/def.png\" width=\"75\" height=\"75\" /></td>";
+                                    else
+                                        echo "<td><img src=\"{$home_url}images/thumbs/{$image_url}\" width=\"75\" height=\"75\" /></td>";
+                                    echo "<td><b>";
+                                    if(strpos($productname, "define") == true || $productname=='0') echo "Plain";
+                                        else echo "{$productname}";
+                                    echo "</b>";
+                                    if(!empty($note))echo "<p>Note: {$note}</p>";
+                                    echo "</td>";
+                                    echo "<td>" . $purchase_order->getPOItemQuantityByColor($poid, $productitemid, 'White') . "</td>";
+                                    echo "<td>" . $purchase_order->getPOItemQuantityByColor($poid, $productitemid, 'Blue') . "</td>";
+                                    echo "<td>" . $purchase_order->getPOItemQuantityByColor($poid, $productitemid, 'Gray') . "</td>";
 
-
-    <?php       
-        $stmt = $purchase_order->readPOItem($poid);
-        $num  = $stmt->rowCount();
-        echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
-        
-        if($num>0){
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                extract($row);
-                echo "<tr data-id=\"" . $id . "\">";
-                //echo "<td>{$i}</td>";
-                if((strpos($image_url, "define") == true ) || $image_url=='none' || $image_url=='0' || $image_url=='undefined')
-                    echo "<td><img src=\"{$home_url}images/def.png\" width=\"75\" height=\"75\" /></td>";
-                else
-                    echo "<td><img src=\"{$home_url}images/thumbs/{$image_url}\" width=\"75\" height=\"75\" /></td>";
-                echo "<td><b>";
-                if($product == "HH") echo "Helmet Holder";
-                else if($product == "TH") echo "Ticket Holder";
-                echo "</b>";
-                if(!empty($note))echo "<p/>Note: {$note}</p></td>";
-                echo "<td class=\"xd-custom\">";
-                if(strpos($productname, "define") == true || $productname=='0') echo "Plain";
-                else echo "{$productname} </td>";
-                echo "<td class=\"xd-color\">{$color}</td>";
-                echo "<td><span class=\"xd-qty\">{$quantity}</span></td>";
-
-                if(($purchase_order->username == $_SESSION['username'] && ($purchase_order->status=="New" || $purchase_order->status=="On-queue")) || ($role=="hans" && ($purchase_order->status=='processing' || $purchase_order->status=='delivered'))) 
-                    {
-                echo "<td>";
-                echo "<button data-id={" . $id . "} data-toggle=\"modal\" data-target=\"#edit\" class=\"btn btn-sm btn-edit-qty btn-default\">Edit Quantity</button> ";
-                echo "<button data-toggle=\"modal\" data-target=\"#warn\" class=\"btn btn-sm btn-delete btn-danger\">Delete</button>";
-                echo "</td>";
-                    }
-
-                echo "</tr>";
-                $i+=1;
-                //echo $num;
-            }
-            
-        }
-        else{
-            echo "<div class='alert alert-info'>No products found.</div>";
-        }
-        echo "</div>";
-
-    ?>
-    </tbody>
-    <tfoot>
-        <td colspan="4"><span class="pull-right">Total</span></td>
-        <td>
-        <?php
-        $stmt = $purchase_order->readPOSum($poid);
-        echo $purchase_order->sum;
-        ?>
-        </td>
-    </tfoot>
-    </table>
+                                    echo "</tr>";
+                                }
+                            }
+                        }
+                        ?>
+                        
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><span class="pull-right">Total</span></td>
+                            <?php
+                                echo "<td>" . $purchase_order->getPOSumByColor($poid, 'White') . "</td>";
+                                echo "<td>" . $purchase_order->getPOSumByColor($poid, 'Blue') . "</td>";
+                                echo "<td>" . $purchase_order->getPOSumByColor($poid, 'Gray') . "</td>";
+                            ?>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
-    </div>
+    </div><!-- end of tab2-->
+  </div>
+
 </div>
+
+
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
