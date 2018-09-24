@@ -84,139 +84,24 @@ echo "</div>";
     </div>
     <div class="col-md-9">
     <h3>Activity</h3>
-
-        <?php
-        //echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
-        //if($_SESSION["admin"]=='Y')
-        $stmt = $job_order->readJODActivityStream();
-        //else
-            //$stmt = $job_order->readJODwithUserandStatus($_SESSION['userid'], "For Approval");
-        $num  = $stmt->rowCount();
-
-        if($num>0){
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                extract($row);
-
-                if($XTABLE=="JO"){
-                    echo "<div class=\"panel panel-info\" style=\"margin:30px 0\">";
-                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
-                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
-                        echo "<div class=\"pull-left\">";
-                            echo "<a href=\"{$home_url}joborder.php?&id={$ID}\" >";
-                            echo "<h4 style=\"margin: 2px 0\">Job Order #{$ID}</h4>";
-                            echo "</a>";
-                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"h:i a") . "</span>";
-                        echo "</div></div>";
-                        //echo "<div class=\"panel-body\">";
-                        echo "<table class=\"table table-hover\">";
-                    $stmt2 = $job_order->readJOD($ID);
-                    $num2 = $stmt2->rowCount();
-                    $i = 0;
-                    $tempjod = $ID;
-                    if($num2>0){
-                        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-                            extract($row2);
-                            if($i < 4){
-                                echo "<tr>";
-                                if($image_url=="") $image_url = "def.png";
-                                echo "<td class=\"col-xs-1\" style=\"padding-left: 15px\"><a href=\"{$home_url}joborderitem.php?&code={$code}\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /></a></td>";
-                                echo "<td class=\"col-xs-9\"><a href=\"{$home_url}joborderitem.php?&code={$code}\">{$code}</a><br/>{$note}</td>";
-                                echo "<td class=\"col-xs-2\">{$status}</td>";
-                                echo "</tr>";
-                            }
-                            else{
-                                echo "<tr>";
-                                echo "<td colspan=\"3\"><a href=\"{$home_url}joborder.php?&id={$tempjod}\" >Show All...</a></td>";
-                                echo "</tr>";
-                                break;
-                            }
-                            $i++;
-                        }
-                    }
-                    echo "</table>";
-                    echo "</div>";
-                }
-                else if($XTABLE == "PO"){
-                    echo "<div class=\"panel panel-success\" style=\"margin:30px 0\">";
-                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
-                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
-                        echo "<div class=\"pull-left\">";
-                            echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
-                            echo "<h4 style=\"margin: 2px 0\">Purchase Order #{$ID}</h4>";
-                            echo "</a>";
-                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
-                        echo "</div></div>";
-                        echo "<table class=\"table table-hover\">";
-                    $stmt2 = $purchase_order->readPOItem($ID);
-                    $num2 = $stmt2->rowCount();
-                    $i = 0;
-                    if($num2>0){
-                        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-                            extract($row2);
-                            if($i < 4){
-                                //echo $JODID . " " . $code;
-                                echo "<tr>";
-                                if($image_url=="undefined" || $image_url=="none" || $image_url=="0" || $image_url=="") $image_url = "def.png";
-                                echo "<td class=\"col-xs-1\" style=\"padding-left: 15px\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /></td>";
-                                echo "<td class=\"col-xs-3\">";
-                                    if($product == "HH") echo "Helmet Holder";
-                                    else if($product == "TH") echo "Ticket Holder";
-                                echo "<br/><span class=\"text-muted\">{$color}</span>";
-                                echo "</td>";
-                                echo "<td class=\"col-xs-6\">";
-                                    if($productname=="0" || $productname =="") echo $type;
-                                else echo $productname;
-                                echo "<br/><span class=\"text-muted\">{$note}</span>";
-                                echo "</td>";
-                                echo "<td class=\"col-xs-2\">";
-                                echo "x{$quantity}</td>";
-                                echo "</tr>";
-                            }
-                            else{
-                                echo "<tr>";
-                                echo "<td colspan=\"3\"><a href=\"{$home_url}purchaseorder.php?&id={$ID}\" >Show All...</a></td>";
-                                echo "</tr>";
-                                break;
-                            }
-                            $i++;
-                        }
-                    }
-                    echo "</table>";
-                    echo "</div>";
-                }
-                else if($XTABLE == "PRD"){
-                    $Product->product_id = $ID;
-                    $Product->getProductItem();
-                                       
-                    echo "<div class=\"panel panel-warning\" style=\"margin:30px 0\">";
-                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        if ($Product->image_url == "none" || !isset($Product->image_url))
-                            $image_url = "def.png";
-                        //echo "<div><img class=\"img-rounded\"  width=\"40\" height=\"40\" /></div>";
-                        echo "<div class=\"pull-left\"><img src=\"{$home_url}images/" . $Product->image_url . "\" width=\"80\" height=\"80\" /> </div>";
-                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\"></div>";
-                        echo "<div class=\"pull-left\" style=\"margin-left: 20px\">";
-                            //echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
-                            echo "<h4 style=\"margin: 2px 0\">" . $Product->name . "</h4>";
-                            //echo "</a>";
-                            //{$nickname} is from outside loop.
-                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
-                            echo "<span style=\"display:block\">";
-                            if ($Product->type == "HH") echo "Helmet Holder";
-                            else if ($Product->type == "TH") echo "Ticket Holder";
-                            echo "</span>";
-                        //echo $Product->jod_id 
-                        echo "</div></div>";
-                    echo "</div>";
-                }
-            }
-        }
+        <div class="panel panel-info">
+            <div class="panel-body" style="padding: 0">
+                <textarea class="form-control" style="width: 100%; height: 100%; border: 1px solid #ccc;resize: none;"></textarea>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left">
+                    <input type="button" class="btn btn-primary btn-sm" value="Submit" />
+                </div>
+                <div class="form-group pull-right" style="margin: 0">
+                    <label>
+                        <input type="checkbox"> Pin post.
+                    </label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
         
-        else echo "<div class='alert alert-info'>No recent activity.</div>";
-        
-        ?>
+        <?php include 'objects/functions/stream.php' ?>
   
   </div>
 </div>
@@ -251,6 +136,22 @@ echo "</div>";
     </div>
   </div>
 </div>
+
+
+<script>
+$(window).scroll(function() {
+    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+        $.ajax({
+            url:"template/stream.php",
+            method:"POST",
+            //data:{type:type, id:id},
+            success:function(data){
+                $('.home-approval .col-md-9').append(data);
+            }
+        })
+    }
+});
+</script>
 <?php
     //include 'template/content.php';
     include 'template/footer.php';

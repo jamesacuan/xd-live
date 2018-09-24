@@ -520,7 +520,7 @@ class JobOrder{
 
 
 
-    function readJODActivityStream(){
+    function readJODActivityStream($from_record_num, $records_per_page){
         /*$query = "SELECT job_order.id as JOID,
         job_order_details.id as JODID,
         job_order_details.type,
@@ -608,7 +608,7 @@ class JobOrder{
         WHERE product_items.isDeleted <> 'Y' AND
             product_items.jodid = 0)TEST
         ORDER BY created DESC
-        LIMIT 50";
+        limit {$from_record_num}, {$records_per_page}";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

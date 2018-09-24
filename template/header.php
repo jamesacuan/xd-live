@@ -15,6 +15,8 @@
     <link href="assets/css/datatables.css" rel="stylesheet" />
     <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="assets/css/dataTables.bootstrap.min.css" rel="Stylesheet" />
+    <link href="assets/css/easy-autocomplete.min.css" rel="Stylesheet" />
+    <link href="assets/css/easy-autocomplete.themes.min.css" rel="Stylesheet" />
     <link href="assets/favicon.png" rel="shortcut icon" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <script src="assets/js/jquery-3.2.1.js"></script>

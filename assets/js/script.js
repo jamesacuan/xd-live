@@ -105,4 +105,10 @@ $(function() {
       });*/
 
 
+      var options = {
+        url: "http://localhost/xd-live/functions/autocomplete.php",
+        getValue: "name",
+        
+    };
     
+    $(".nav-search input[type='search']").easyAutocomplete(options);
