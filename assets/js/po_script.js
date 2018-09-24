@@ -114,6 +114,10 @@ $(document).ready(function(){
                if(product=="HH")       prodname = "Helmet Holder";
                else if(product=="TH")  prodname = "Ticket Holder";
 
+               if(type=='plain'){
+                  custom = "0";   //for whatever reason, this has been the default value.
+               }
+
                output = '<tr id="row_'+count+'">';
                output += '<td></td>';
                if(type=='custom'){

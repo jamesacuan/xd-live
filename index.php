@@ -11,8 +11,8 @@ $database = new Database();
 $db = $database->getConnection();
 
 $job_order = new JobOrder($db);
-$settings =  new Settings($db);
-$product =  new Product($db);
+$settings  =  new Settings($db);
+$Product   =  new Product($db);
 $purchase_order = new PurchaseOrder($db);
 
 $page_title= "Dashboard";
@@ -187,24 +187,28 @@ echo "</div>";
                     echo "</div>";
                 }
                 else if($XTABLE == "PRD"){
-                    $test = $ID;
+                    $Product->product_id = $ID;
+                    $Product->getProductItem();
                                        
-                    $product->getProductItem($test);
-                    
-                            
                     echo "<div class=\"panel panel-warning\" style=\"margin:30px 0\">";
                         echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        if ($product->image_url == "none" || !isset($product->image_url))
+                        if ($Product->image_url == "none" || !isset($Product->image_url))
                             $image_url = "def.png";
                         //echo "<div><img class=\"img-rounded\"  width=\"40\" height=\"40\" /></div>";
-                        echo "<div class=\"pull-left\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /> </div>";
+                        echo "<div class=\"pull-left\"><img src=\"{$home_url}images/" . $Product->image_url . "\" width=\"80\" height=\"80\" /> </div>";
                         //echo "<div class=\"pull-left\" style=\"margin-left:20px\"></div>";
                         echo "<div class=\"pull-left\" style=\"margin-left: 20px\">";
                             //echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
-                            echo "<h4 style=\"margin: 2px 0\">" . $product->name . "</h4>";
+                            echo "<h4 style=\"margin: 2px 0\">" . $Product->name . "</h4>";
                             //echo "</a>";
+                            //{$nickname} is from outside loop.
                             echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
-                        echo $product->jod_id . "</div></div>";
+                            echo "<span style=\"display:block\">";
+                            if ($Product->type == "HH") echo "Helmet Holder";
+                            else if ($Product->type == "TH") echo "Ticket Holder";
+                            echo "</span>";
+                        //echo $Product->jod_id 
+                        echo "</div></div>";
                     echo "</div>";
                 }
             }

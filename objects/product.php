@@ -20,6 +20,7 @@ class Product{
     public $note;
     public $userid;
     public $jod_id;
+    public $productid, $product_id;
 
     public function __construct($db){
         $this->conn = $db;
@@ -165,22 +166,29 @@ class Product{
         return false;
     }
 
-    function getProductItem($id){
+    function getProductItem(){
         $query = "SELECT 
         product_items.name,
         product_items.image_url,
         product_items.jodid,
         product_items.type
         FROM product_items
-        WHERE product_items.id = $id";
+        WHERE product_items.id = ?";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();   
+        $stmt->bindParam(1, $this->product_id);
+        $stmt->execute();
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        /*$stmt = $this->conn->prepare($query);
+        $stmt->execute();   
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);*/
 
         $this->name      = $row['name'];
         $this->image_url = $row['image_url'];
         $this->jod_id    = $row['jodid'];
+        $this->type      = $row['type'];
 
         $stmt->execute();
         return $stmt;
