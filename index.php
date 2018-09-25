@@ -101,7 +101,7 @@ echo "</div>";
             </div>
         </div>
         
-        <?php include 'objects/functions/stream.php' ?>
+        <?php include 'functions/stream.php' ?>
   
   </div>
 </div>
@@ -139,14 +139,16 @@ echo "</div>";
 
 
 <script>
+var i=0;
 $(window).scroll(function() {
     if($(window).scrollTop() == $(document).height() - $(window).height()) {
         $.ajax({
-            url:"template/stream.php",
+            url:"functions/activity.php",
             method:"POST",
-            //data:{type:type, id:id},
-            success:function(data){
-                $('.home-approval .col-md-9').append(data);
+            data:{i:i},
+            success:function(data){  
+                i+=10;
+                $('.home-approval .col-md-9').append(data);  
             }
         })
     }
