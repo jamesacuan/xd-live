@@ -83,7 +83,7 @@ function JO($connect, $home_url, $JOID, $NICKNAME, $CREATED){
             $output .= "<div class=\"panel-heading clearfix\" role=\"tab\">";
             $output .= "<div class=\"pull-left\">";
             $output .= "<h4 style=\"margin: 2px 0\">Job Order #{$JOID}</h4>";
-            $output .= "<span class=\"text-muted\">By {$NICKNAME} | On " . date_format(date_create($CREATED),"F d, Y") . " at " . date_format(date_create($CREATED),"h:i a") . "</span>";
+            $output .= "<span class=\"text-muted\">By <a href=\"#\" data-toggle=\"popover\" title=\"Popover Header\" data-content=\"Some content inside the popover\">{$NICKNAME}</a> | On " . date_format(date_create($CREATED),"F d, Y") . " at " . date_format(date_create($CREATED),"h:i a") . "</span>";
             $output .= "</div>";
             $output .= "</div>";
         $output .= "<table class=\"table table-hover\">";
