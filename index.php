@@ -39,7 +39,7 @@ include 'template/header.php'
 <?php
 /*
 echo "<div class='col-md-12'>";
-$action = isset($_GET['action']) ? $_GET['action'] : "";
+$action = isset($_FGET['action']) ? $_GET['action'] : "";
 if($action=='login_success'){
         echo "<h3>Hi, " . $_SESSION['nickname'] . ". Welcome back!</h3>";
 }
