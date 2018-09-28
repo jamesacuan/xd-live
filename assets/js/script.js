@@ -22,7 +22,16 @@ $("button[data-close='alert']").click(function(){
 
 $(document).ready( function () {
      $('[data-toggle="tooltip"]').tooltip();
-     $('[data-toggle="popover"]').popover( { trigger: "hover" });
+     /*$('[data-toggle="popover"]').popover( {
+         trigger: "hover",
+         html: true,
+        content: $('#cont').html()
+    });*/
+    $('a.profile-link').popover( {
+        trigger: "hover",
+        html: true,
+       content: $('#cont').html()
+   });
 
     
 });

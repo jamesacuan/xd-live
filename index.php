@@ -137,6 +137,21 @@ echo "</div>";
   </div>
 </div>
 
+<div class='container hide' id='cont'>
+     <a data-toggle="modal" data-target="#facebook"
+        class="btn btn-default">
+        Facebook 
+        </a>
+         <a onclick="twitter();"
+        class="btn btn-default">
+        Twitter 
+        </a>
+         <a class="btn btn-default"
+        data-placement="bottom" data-toggle="popover" data-title="Login" data-container="body"
+        type="button" data-html="true" href="#" id="login">
+        Email 
+        </a>
+</div>
 
 <script>
 var i=0;
