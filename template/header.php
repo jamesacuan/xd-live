@@ -15,8 +15,21 @@
     <link href="assets/css/datatables.css" rel="stylesheet" />
     <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="assets/css/dataTables.bootstrap.min.css" rel="Stylesheet" />
+    <?php
+    /*
     <link href="assets/css/easy-autocomplete.min.css" rel="Stylesheet" />
     <link href="assets/css/easy-autocomplete.themes.min.css" rel="Stylesheet" />
+    */
+    ?>
+
+    <?php
+    if($page_title == "Create New Purchase Order"){
+    ?>
+    <link href="assets/css/select2.bootstrap.css" rel="Stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <?php
+    }
+    ?>
     <link href="assets/favicon.png" rel="shortcut icon" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <script src="assets/js/jquery-3.2.1.js"></script>

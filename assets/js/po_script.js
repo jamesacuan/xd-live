@@ -5,7 +5,7 @@ $(document).ready(function(){
      autoOpen:false,
      width:400
     });
-   
+
     $('#add_item').click(function(){
        clearAddDialog();
        $('#item_dialog').dialog('option', 'title', 'Add Item');
@@ -187,6 +187,21 @@ $(document).ready(function(){
                $('#item_dialog').dialog('close');
                $('#addItemModal').modal('toggle');
        }
+    });
+
+    $("#custom").select2({
+        theme: "bootstrap",
+        width: "100%",
+        placeholder: "Select a custom logo",
+        dropdownParent: $("#item_custom .col-sm-9"),
+    });
+
+    $("#colors").select2({
+        theme: "bootstrap",
+        width: "100%",
+        placeholder: "Choose a color",
+        dropdownParent: $("#item_color .col-sm-9"),
+        minimumResultsForSearch: -1
     });
    
    function clearAddDialog(){

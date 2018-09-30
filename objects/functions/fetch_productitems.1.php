@@ -6,7 +6,8 @@ $query = "SELECT * FROM `product_items` WHERE isDeleted <> 'Y' AND `type`= '" . 
 $result = mysqli_query($connect, $query);
 $opt1 = 0;
 $opt2 = 0;
-$output .= '<option></option>';
+
+
 while($row = mysqli_fetch_array($result)){
     if($row['visibility'] != 0 && $opt1 != 1) {
         $output .= "<optgroup label='Personal'>";

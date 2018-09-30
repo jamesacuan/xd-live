@@ -8,8 +8,7 @@ $db = $database->getConnection();
 // set page title
 $page_title="View Profile";
 
-if(isset($_GET($))){
-
+if(isset($_GET["u"])){
     if(strtolower($_GET['type'])=='hh') $type="HH";
         elseif(strtolower($_GET['type'])=='th') $type="TH";
         else $type="";

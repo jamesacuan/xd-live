@@ -137,6 +137,7 @@ include 'template/header.php';
                     <select class="form-control input-sm" name="custom" id="custom"></select>
                 </div>
             </div>
+
             <div class="form-group" id="item_quantity">
                 <label class="control-label col-sm-3">Quantity<span class="required">*</span></label>
                 <div class="col-sm-9">
@@ -158,8 +159,8 @@ include 'template/header.php';
         </div>
     </div>
 </div>
+<script src="assets/js/select2.jquery.js"></script>
 <script src="assets/js/po_script.js"></script>
-
 <?php 
 include 'template/footer.php';
 ?>

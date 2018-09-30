@@ -76,7 +76,8 @@ if($_POST){
     if($_POST['form']=='Publish'){
         echo $product->productitemname = $_POST['name'];
         echo $product->image_url  = $_POST['image'];
-        echo $product->visibility = $_POST['visibility'];
+        //echo $product->visibility = $_POST['visibility'];
+        $product->visibility      = 0; //make every published items public (9/30/2018)
         echo $product->jodid      = $_POST['jod'];
         echo $product->type       = $_POST['type'];
         echo $product->code       = $_POST['code'];
@@ -464,21 +465,26 @@ if($job_order->status=="Done"){
                     <?php       
                         $stmt = $job_order->readJODFeedback($itemcode);
                         $num  = $stmt->rowCount();
-
+                        
                         if($num>0){
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                                 extract($row);
                                 if(!empty($image_url)){
                                     //if($role == "hans")
-                                        echo "<label class=\"radio-inline\"><input type=\"radio\" name=\"image\" value=\"{$image_url}\" checked /><img title=\"added last {$created}\" src=\"" . $home_url . "images/" . $image_url . "\" style=\"width:100px; height: 100px;\"/></label>";
+                                        echo "<label class=\"radio-inline\"><input type=\"radio\" name=\"image\" value=\"{$image_url}\" required/><img title=\"added last {$created}\" src=\"" . $home_url . "images/" . $image_url . "\" style=\"width:100px; height: 100px;\"/></label>";
                                 }
                             }
                         }
 
                         ?>
-                    <label class="radio-inline"><input type="radio" name="image" value="none" required>none</label>
-
+                    <?php
+                    /* REMOVED AS PER REQUEST 9/30/2018
+                        <label class="radio-inline"><input type="radio" name="image" value="none" required>none</label>
+                    */?>
                 </div>
+                <?php
+                /*
+                REMOVED AS PER REQUEST 9/30/2018
                 <div class="form-group">
                     <b>Visibility:</b>
                     <p class="text-muted">Have this item to be purchased by this requestor only?</p>
@@ -487,8 +493,10 @@ if($job_order->status=="Done"){
                         </div>
                         <div class="radio">
                             <label><input type="radio" name="visibility" value="" />Allow others to make purchase order of this product <span class="label label-default"><span class="glyphicon glyphicon-globe"></span> Public</span></label>
-                    </div>
-                    </div>
+                        </div>
+                </div>
+                */
+                ?>
                 
             </div>
             <div class="modal-footer">
