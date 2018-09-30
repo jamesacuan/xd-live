@@ -30,7 +30,11 @@ $(document).ready( function () {
     $('a.profile-link').popover( {
         trigger: "hover",
         html: true,
-       content: $('#cont').html()
+       content: $('#cont').html(),
+       delay: { 
+            show: "1000", 
+            hide: "100"
+        }
    });
 
     
@@ -68,43 +72,7 @@ $(function() {
     $("img.xd-img").lazyload();
 });
 
-/*var availableTags = 
-        [
-            {
-              "name": "MAYHEM",
-              "id": "5"
-            },
-            {
-              "name": "kawasexy",
-              "id": "6"
-            },
-            {
-              "name": "O'NEAL BLU_WHT",
-              "id": "7"
-            },
-            {
-              "name": "Versys 1000",
-              "id": "8"
-            },
-            {
-              "name": "Kawasaki_GreenStripes",
-              "id": "9"
-            },
-            {
-              "name": "HJC_BLUEWhite",
-              "id": "10"
-            },
-            {
-              "name": "NE77276",
-              "id": "11"
-            },
-            {
-              "name": "Kawasaki Z650",
-              "id": "12"
-            }
-          ];
-
-      $(".nav-search input[type='search']").autocomplete({
+/*   $(".nav-search input[type='search']").autocomplete({
         source: 'http://localhost/xd-live/functions/autocomplete.php',
         //source: availableTags,
         select: function (event, ui) {
@@ -115,10 +83,10 @@ $(function() {
       });*/
 
 
-      var options = {
+      /*var options = {
         url: "http://localhost/xd-live/functions/autocomplete.php",
         getValue: "name",
         
-    };
+    };*/
     
-    $(".nav-search input[type='search']").easyAutocomplete(options);
+    //$(".nav-search input[type='search']").easyAutocomplete(options);

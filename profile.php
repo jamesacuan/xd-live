@@ -9,20 +9,19 @@ $db = $database->getConnection();
 $page_title="View Profile";
 
 if(isset($_GET["u"])){
-    if(strtolower($_GET['type'])=='hh') $type="HH";
-        elseif(strtolower($_GET['type'])=='th') $type="TH";
-        else $type="";
+    $username = strtolower($_GET['u']);
 }
 
 
 // include login checker
 $require_login=true;
+$page_ribbon = "false";
 include_once "login_check.php";
 include 'template/header.php';
 ?>
 
 <?php
-echo "<h2>Title</h2>";
+echo "<h2>{$username}</h2>";
 ?>
 
 
