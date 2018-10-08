@@ -144,6 +144,22 @@ class User{
         return $stmt;
     }
 
+
+    function getUserID($username){
+        $query = "SELECT `userid` from users
+                    WHERE `username` = '" . $username ."'
+                    LIMIT 0,1";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->id  = $row['userid'];
+        //$stmt->execute();
+        return $this->id;
+    }
+
+
     function setPassword($uid){
         $query = "UPDATE " . $this->table2_name . "
                 SET

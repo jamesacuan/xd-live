@@ -64,9 +64,13 @@
     <?php unset($_SESSION['modal']); } ?>
 
      <?php 
-     if(isset($page_ribbon)){
+     if(isset($page_ribbon) && isset($profiles)){
+
+     }
+     else if(isset($page_ribbon)){
         echo "<div class=\"container\">";
      }
+
      else {
         echo "<div class=\"xd-ribbon\"></div>";
         echo "<div class=\"xd-container container\">";
