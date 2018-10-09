@@ -74,21 +74,20 @@ include 'template/header.php'
     <div class="col-md-9">
     
     <?php
-    if (!isset($_GET['type'])){}
-    else{
+    if (isset($_GET['type']) || isset($_GET['query'])){
         echo "<div class=\"row\">";
             echo "<span>Showing ";
-            echo $product->getProductItemsCount($type);
+            echo $product->getProductItemsCount($query, $type);
             echo " results for</span> <span class=\"label label-success\">";
             if ($type=="HH") echo "Helmet Holder";
-            else if ($type="TH") echo "Ticket Holder";
+            else if ($type=="TH") echo "Ticket Holder";
             echo "&nbsp;<a href=\"{$home_url}products.php\"><span>×</span></a></span>";
         echo "</div>";
     }
     ?>
     <div class="row">
     <?php   
-            $total_rows = $product->getProductItemsCount($type);  
+            $total_rows = $product->getProductItemsCount($query, $type);  
             $stmt = $product->readItems($query, $type, $from_record_num, $records_per_page);
             $num  = $stmt->rowCount();
             $temp=0;

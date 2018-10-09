@@ -46,7 +46,7 @@
 
 
             <div class="nav-search col-md-5">
-            <div class="input-group">
+            <div class="input-group pull-right">
                 <input type="search" class="form-control" accesskey="/" />
                 <?php
                 /*

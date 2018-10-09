@@ -219,11 +219,13 @@ class Product{
         return $stmt;
     }
 
-    function getProductItemsCount($type){
-        $query = "SELECT 
-            count(*) as total
-            FROM product_items
-            WHERE product_items.type LIKE '%{$type}%'";
+    function getProductItemsCount($query, $type){
+        $query = "SELECT
+        count(*) as total
+        FROM product_items
+        WHERE product_items.isDeleted <> 'Y' AND
+        product_items.name LIKE '%{$query}%' AND
+        product_items.type LIKE '%{$type}%'";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
