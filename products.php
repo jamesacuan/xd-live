@@ -54,11 +54,11 @@ include 'template/header.php'
                 <h3>Products</h3>
             </div>
             <ul class="list-group">
-                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH">Helmet Holder</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH">Ticket Holder</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH<?php if(isset($_GET['query'])) echo "&query={$query}"  ?>">Helmet Holder</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH<?php if(isset($_GET['query'])) echo "&query={$query}"  ?>">Ticket Holder</a></li>
                 <li class="list-group-item">
                     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="get">
-                        <input type="search" class="form-control" placeholder="search" name="query"/>
+                        <input type="search" class="form-control" placeholder="search" name="query" <?php if(isset($_GET['query'])) echo "value=\"{$query}\""  ?> />
                         <?php
                         if(isset($_GET['type'])){
                             echo "<input type=\"hidden\" name=\"type\" value=\"{$type}\"/>";

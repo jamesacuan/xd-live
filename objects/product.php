@@ -205,7 +205,7 @@ class Product{
                 product_items.visibility
                 FROM product_items
                 WHERE product_items.isDeleted <> 'Y' AND
-                product_items.name LIKE '%{$query}' AND
+                product_items.name LIKE '%{$query}%' AND
                 product_items.type LIKE '%{$type}%'
                 ORDER BY product_items.name ASC
                 limit {$from_record_num}, {$records_per_page}";
