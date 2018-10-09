@@ -274,7 +274,11 @@ body {
   }
   .panel-yellow > a:hover {
 	color: #df8a13;
-  }
+	}
+	
+	.col-md-9 .panel .xd-circle{
+		margin-right: 10px;
+	}
   .timeline {
 	position: relative;
 	padding: 20px 0 20px;

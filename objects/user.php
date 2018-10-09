@@ -262,4 +262,55 @@ class User{
         }
         return false;
     }
+
+    function readProfileActivity($userid, $from_record_num, $records_per_page){
+        $query = "SELECT job_order.id as ID,
+        CONCAT('JO') as XTABLE,
+        users.nickname,
+        users.username,
+        job_order.created as created
+        FROM job_order
+        JOIN users ON users.userid = job_order.userid
+        WHERE job_order.isDeleted <> 'Y' AND
+        users.userid = {$userid}
+ 
+ 
+         UNION
+ SELECT purchase_order.id as ID,
+       CONCAT('PO') as XTABLE,
+       users.nickname,
+       users.username,
+       purchase_order.created as created
+       FROM purchase_order
+       JOIN users ON users.userid = purchase_order.userid
+       WHERE purchase_order.isDeleted <> 'Y' AND
+       users.userid = {$userid}
+       
+ UNION
+ 
+ SELECT id, CONCAT('PRD') as XTABLE, nickname, username, created
+        
+     FROM (SELECT
+         product_items.id,
+         product_items.name,
+         product_items.image_url,
+         product_items.created,
+         product_items.jodid,
+         users.nickname,
+     users.username
+         FROM `product_items`
+         JOIN job_order_details ON job_order_details.id = product_items.jodid
+         JOIN job_order ON job_order.id = job_order_details.job_orderid
+         JOIN users ON users.userid = job_order.userid
+         WHERE product_items.isDeleted <> 'Y' AND
+         users.userid = {$userid})TEST
+         ORDER BY created DESC
+        limit {$from_record_num}, {$records_per_page}";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+
+    }
+
 }

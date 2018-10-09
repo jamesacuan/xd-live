@@ -21,7 +21,7 @@ $records_per_page=32;
                 if($XTABLE=="JO"){
                     echo "<div class=\"panel panel-info\" style=\"margin:30px 0\">";
                         echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
+                        echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
                         //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
                         echo "<div class=\"pull-left\">";
                             echo "<a href=\"{$home_url}joborder.php?&id={$ID}\" >";
@@ -64,7 +64,7 @@ $records_per_page=32;
                 else if($XTABLE == "PO"){
                     echo "<div class=\"panel panel-success\" style=\"margin:30px 0\">";
                         echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
-                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
+                        echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
                         //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
                         echo "<div class=\"pull-left\">";
                             echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";

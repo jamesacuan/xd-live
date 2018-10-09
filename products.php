@@ -10,12 +10,20 @@ $product = new Product($db);
 
 $page_title= "Products";
 $type = "";
+$query = "";
+
 if (!isset($_GET['type']))
     $type = "";
 else {
     if(strtolower($_GET['type'])=='hh') $type="HH";
     elseif(strtolower($_GET['type'])=='th') $type="TH";
     else $type="";
+}
+
+if (!isset($_GET['query']))
+    $query = "";
+else {
+    $query = $_GET['query'];
 }
 
 $require_login=true;
@@ -48,7 +56,18 @@ include 'template/header.php'
             <ul class="list-group">
                 <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH">Helmet Holder</a></li>
                 <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH">Ticket Holder</a></li>
+                <li class="list-group-item">
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="get">
+                        <input type="search" class="form-control" placeholder="search" name="query"/>
+                        <?php
+                        if(isset($_GET['type'])){
+                            echo "<input type=\"hidden\" name=\"type\" value=\"{$type}\"/>";
+                        }
+                        ?>
+                    </form>
+                </li>
             </ul>
+
         </div>
     </div>
     
@@ -70,7 +89,7 @@ include 'template/header.php'
     <div class="row">
     <?php   
             $total_rows = $product->getProductItemsCount($type);  
-            $stmt = $product->readItems($type, $from_record_num, $records_per_page);
+            $stmt = $product->readItems($query, $type, $from_record_num, $records_per_page);
             $num  = $stmt->rowCount();
             $temp=0;
 

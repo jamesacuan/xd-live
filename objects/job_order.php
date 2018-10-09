@@ -519,7 +519,6 @@ class JobOrder{
     }
 
 
-
     function readJODActivityStream($from_record_num, $records_per_page){
         /*$query = "SELECT job_order.id as JOID,
         job_order_details.id as JODID,
