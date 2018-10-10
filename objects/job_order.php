@@ -275,6 +275,35 @@ class JobOrder{
         return false;
     }
 
+
+    function getActiveJobOrderCount($id){
+        $query = "SELECT count(*) as total
+        FROM `job_order` a
+        JOIN users c ON a.userid = c.userid
+        JOIN job_order_details b ON a.id = b.job_orderid
+        JOIN job_order_status s1 ON s1.job_order_code = b.code
+        WHERE b.type LIKE '%%'
+        AND b.isDeleted <> 'Y'
+        AND s1.status <> 'Published'
+        AND s1.status <> 'Denied'
+        AND c.userid = {$id}
+        AND s1.created = (
+        SELECT MAX( s2.created )
+        FROM job_order_status s2
+        WHERE s2.job_order_code = s1.job_order_code )
+        ORDER BY b.created ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();   
+        $num = $stmt->rowCount();
+    
+        if($num>0){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total'];
+        }
+        return false;
+    }
+
     function getJobOrderDetailsCount(){
         $query = "SELECT count(*) AS total FROM job_order_details";
 

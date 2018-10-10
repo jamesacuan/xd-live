@@ -31,6 +31,10 @@ if(isset($_GET["u"])){
         header("Location: 404.php");
     }
 }
+else{
+    $username = $_SESSION['username'];
+    $userid = $user->getUserID($username);
+}
 
 
 // include login checker
@@ -43,14 +47,11 @@ include 'template/header.php';
 ?>
 <div class="row" style="margin: 0">
     <div class="col-md-12" style="background-color: #171d5b">
-        <div class="container">
-            <div class="pull-left">
+        <div class="container" style="text-align: center">
             <?php
             echo "<h2>{$username}</h2>";
             ?>
-            </div><div class="pull-left">
-            <button class="btn btn-md btn-primary">Follow</button>
-            </div>
+            <button class="btn btn-sm btn-primary">Follow</button>
         </div>
     </div>
 </div>

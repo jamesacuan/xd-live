@@ -6,6 +6,7 @@ include_once "objects/job_order.php";
 include_once "objects/purchase_order.php";
 include_once "objects/product.php";
 include_once "objects/settings.php";
+include_once "objects/user.php";
 
 $database = new Database();
 $db = $database->getConnection();
@@ -14,11 +15,14 @@ $job_order = new JobOrder($db);
 $settings  =  new Settings($db);
 $Product   =  new Product($db);
 $purchase_order = new PurchaseOrder($db);
+$user      = new User($db);
 
 $page_title= "Dashboard";
 
 $require_login=true;
 $page_ribbon="F";
+
+$userid = $user->getUserID($_SESSION['username']);
 
 $today     = date("m/d/Y");
 $yesterday = date("m/d/Y", strtotime($today . ' -1 days'));
@@ -71,15 +75,33 @@ echo "</div>";
 </div>
 <div class="row home-approval">
     <div class="col-md-3">
-        <div class="thumbnail panel panel-default">
-            <div class="caption">
+        <div class="thumbnail panel panel-default" style="padding: 0">
+            <div class="caption" style="background-color: navy; height: 100px">
+
+            </div>
+            <div class="caption"  style="padding: 0 10px">
                 <h3>Welcome <?php echo $_SESSION["nickname"]?>!</h3>
                 <!--<p><?php echo $_SESSION["role"]?></p>-->
             </div>
+            <div class="row" style="border: none; padding:10px">
+                <div class="col-sm-6">
+                    <span class="" style="font-size: 26px"><?php echo $job_order->getActiveJobOrderCount($userid)?></span>
+                    <a href="<?php echo $home_url . "joborders.php" ?>"><span style="font-size: 12px;display:block">Job Order</span></a>
+                </div>
+                <div class="col-sm-6">
+                    <span class="" style="font-size: 26px">21</span>
+                    <a href="<?php echo $home_url . "purchaseorders.php" ?>"><span style="font-size: 12px;display:block">Purchase Order</span></a>
+                </div>
+            </div>
+         
+            <?php
+            /*
             <ul class="list-group">
                 <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
                 <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
             </ul>
+            */
+            ?>
         </div>
     </div>
     <div class="col-md-9">

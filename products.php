@@ -54,8 +54,8 @@ include 'template/header.php'
                 <h3>Products</h3>
             </div>
             <ul class="list-group">
-                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH<?php if(isset($_GET['query'])) echo "&query={$query}"  ?>">Helmet Holder</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH<?php if(isset($_GET['query'])) echo "&query={$query}"  ?>">Ticket Holder</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH">Helmet Holder</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH">Ticket Holder</a></li>
                 <li class="list-group-item">
                     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="get">
                         <input type="search" class="form-control" placeholder="search" name="query" <?php if(isset($_GET['query'])) echo "value=\"{$query}\""  ?> />
@@ -75,13 +75,33 @@ include 'template/header.php'
     
     <?php
     if (isset($_GET['type']) || isset($_GET['query'])){
-        echo "<div class=\"row\">";
-            echo "<span>Showing ";
+        echo "<div class=\"row\" style=\"padding:10px\">";
+            echo "<span class=\"pull-left\">Showing ";
             echo $product->getProductItemsCount($query, $type);
-            echo " results for</span> <span class=\"label label-success\">";
-            if ($type=="HH") echo "Helmet Holder";
-            else if ($type=="TH") echo "Ticket Holder";
+           // echo " results for</span> <span class=\"label label-success\">";
+           echo " results for {$query}</span>&nbsp;";
+            if (!isset($_GET['query']) && $type=="HH") echo "Helmet Holder";
+            else if (!isset($_GET['query']) && $type=="TH") echo "Ticket Holder";
             echo "&nbsp;<a href=\"{$home_url}products.php\"><span>×</span></a></span>";
+            echo "<div class=\"pull-right\">";
+                echo "<select class=\"form-control\" onchange=\"location=this.value\">";
+                
+                echo "<option value=\"products.php";
+                    if(isset($_GET['query'])) echo "?query={$query}";
+                echo "\">View All</option>";
+                echo "<option value=\"products.php?type=HH";
+                    if(isset($_GET['query'])) echo "&query={$query}";
+                echo "\" ";
+                    if(isset($_GET['type']) && $type=="HH") echo "selected";
+                echo ">Helmet Holder</option>";
+                echo "<option value=\"products.php?type=TH";
+                    if(isset($_GET['query'])) echo "&query={$query}";
+                echo "\" ";
+                    if(isset($_GET['type']) && $type=="TH") echo "selected";                
+                echo ">Ticket Holder</option>";
+                echo "</select>";
+            echo "</div>";
+
         echo "</div>";
     }
     ?>
@@ -130,6 +150,9 @@ include 'template/header.php'
                     echo "</p>";
                     //echo   "<p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a>";
                     echo  "</div>";
+
+<?php if(isset($_GET['query'])) echo "&query={$query}"  ?>">
+
                     */
                     echo "</div>";
                     echo "</div>";

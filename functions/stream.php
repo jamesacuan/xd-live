@@ -64,13 +64,15 @@ $records_per_page=32;
                 else if($XTABLE == "PO"){
                     echo "<div class=\"panel panel-success\" style=\"margin:30px 0\">";
                         echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
+                        echo "<a href=\"profile.php?&u={$username}\">";
                         echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
+                        echo "</a>";
                         //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
                         echo "<div class=\"pull-left\">";
                             echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
                             echo "<h4 style=\"margin: 2px 0\">Purchase Order #{$ID}</h4>";
                             echo "</a>";
-                            echo "<span class=\"text-muted\">By <a href=\"profile.php?&u={$username}\" class=\"profile-link\" data-toggle=\"popover\" data-placement=\"bottom\">{$nickname}</a> | On ";
+                            echo "<span class=\"text-muted\" style=\"font-size: 12px\"><a href=\"profile.php?&u={$username}\" class=\"profile-link\" data-toggle=\"popover\" data-placement=\"bottom\">{$nickname}</a> | <span class=\"glyphicon glyphicon-time\"></span>&nbsp";
                             echo $settings->time_elapsed_string(date_format(date_create($created),"F d, Y h:i a"));
                             echo " at " . date_format(date_create($created),"H:i a") . "</span>";
                         echo "</div></div>";

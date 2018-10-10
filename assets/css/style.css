@@ -453,18 +453,18 @@ nav.navbar .nav-search input[class="form-control"] {
 	background-color: #282e6c;
 	border: 1px solid #3b4180;
 	color: #fff;
+
 }
 
 
 .xd-nav .nav-search input[class="form-control"]{
-    width: 50px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+		background-color: #282e6c;
+		border: 1px solid #3b4180;
+
 }
 
-/* When the input field gets focus, change its width to 100% */
 .xd-nav .nav-search input[class="form-control"]:focus {
-    width: 100%;
+		background-color: #fff;
 }
 
 
