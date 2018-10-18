@@ -1,20 +1,20 @@
 <?php
-    $action = isset($_GET['action']) ? $_GET['action'] : "";
+    /*$action = isset($_GET['action']) ? $_GET['action'] : "";
     $beta = isset($_GET['betagree']) ? $_GET['betagree'] : "";
     
     if($beta == 1 && $page_title != "Login"){
         $_SESSION['beta'] = 1;
-    }
+    }*/
     if($page_title != "Login"){
-    if($_SESSION['beta'] != 1){
-        include "infobar.php";
-    }
+        /*if($_SESSION['beta'] != 1){
+            include "infobar.php";
+        }*/
 
     include_once "notify.php";
     $notify = new Notify($db);
 }
     ?>
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
          <div class="navbar-header">
             <button type="button" class="navbar-toggle " data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,6 +51,7 @@
             <div class="nav-search col-md-5">
             <div class="input-group" style="width: 100%;">
                 <?php
+                /*
                 if  ($page_title=="Job Orders" || $page_title=="Purchase Orders" || $page_title=="Products"){  
                 ?>
                     <div class="input-group-btn">
@@ -58,10 +59,26 @@
                         <?php echo $page_title; ?>
                         </button>
                     </div>
-                <?php } ?>
+                <?php }*/ ?>
                 <form action="search.php" method="get">
-                <input type="search" placeholder="Search" name="q" class="form-control" accesskey="/" />
+                <input type="search" list="browsers" placeholder="Search" name="q" class="form-control" accesskey="/" />
+                    <datalist id="browsers">
+                    <option value="Internet Explorer">
+                    <option value="Firefox">
+                    <option value="Chrome">
+                    <option value="Opera">
+                    <option value="Safari">
+                    </datalist>
                 </form>
+                <div class="input-group-btn">
+                    <button type="button" id="xd-navbar-search-button" data-toggle="dropdown" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> <span class="caret"></span></button>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Everything</a></li>
+                    <li><a href="#">Products</a></li>
+                    </ul>
+                </div>
+               
                 <?php
                 /*<div class="input-group-btn">
                     <button type="button" id="xd-navbar-search-button" class="btn btn-default xd-btn-search dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span></button>
@@ -101,7 +118,11 @@
                             </a>
                         <ul class="dropdown-menu" role="menu">
                             <?php if($_SESSION['role']=="user"){
-                                echo "<li><a href=\"{$home_url}joborders.php\">Job Order</a></li>";
+                                echo "<li class=\"dropdown-submenu\"><a href=\"{$home_url}joborders.php\">Job Order</a>";
+                                    echo "<ul class=\"dropdown-menu\">";
+                                    echo "<li><a href=\"{$home_url}purchaseorders.php\">Helmet Holder</a></li>";
+                                    echo "<li><a href=\"{$home_url}purchaseorders.php\">Ticket Holder</a></li>";
+                                    echo "</ul></li>";
                                 echo "<li><a href=\"{$home_url}purchaseorders.php\">Purchase Order</a></li>";
                             }
                             if(!empty($_SESSION['admin'])){

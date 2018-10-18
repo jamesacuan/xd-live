@@ -8,4 +8,5 @@
     $headers = "From:" . $from;
     mail($to,$subject,$message, $headers);
     echo "The email message was sent.";
+    https://stackoverflow.com/questions/32717824/notification-system-using-php-and-mysql
 ?>

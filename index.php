@@ -76,9 +76,11 @@ echo "</div>";
 <div class="row home-approval">
     <div class="col-md-3">
         <div class="thumbnail panel panel-default" style="padding: 0">
-            <div class="caption" style="background-color: navy; height: 100px">
+            <!--
+                <div class="caption" style="background-color: navy; height: 100px">
 
             </div>
+            -->
             <div class="caption"  style="padding: 0 10px">
                 <h3>Welcome <?php echo $_SESSION["nickname"]?>!</h3>
                 <!--<p><?php echo $_SESSION["role"]?></p>-->
@@ -102,6 +104,33 @@ echo "</div>";
             </ul>
             */
             ?>
+            
+        </div>
+        <div class="thumbnail panel panel-default">
+            <div class="caption"  style="padding: 0 10px">
+                <h5>Trend&nbsp;<small>last 5 days</small></h5>
+                <!--<p><?php echo $_SESSION["role"]?></p>-->
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+            </ul>
+        </div>
+        <div class="thumbnail panel panel-default">
+            <div class="caption"  style="padding: 0 10px">
+                <h5>Directory</h5>
+                <!--<p><?php echo $_SESSION["role"]?></p>-->
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
+            </ul>
         </div>
     </div>
     <div class="col-md-9">

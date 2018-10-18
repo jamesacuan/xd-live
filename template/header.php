@@ -23,7 +23,7 @@
     ?>
 
     <?php
-    if($page_title == "Create New Purchase Order"){
+    if(strpos($page_title,"Purchase Order")=='true'){
     ?>
     <link href="assets/css/select2.bootstrap.css" rel="Stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
@@ -68,12 +68,12 @@
 
      }
      else if(isset($page_ribbon)){
-        echo "<div class=\"container\">";
+        echo "<div class=\"container\" style=\"padding-top: 90px\">";
      }
 
      else {
         echo "<div class=\"xd-ribbon\"></div>";
-        echo "<div class=\"xd-container container\">";
+        echo "<div class=\"xd-container container\" style=\"padding-top: 50px\">";
      }
      ?>
 

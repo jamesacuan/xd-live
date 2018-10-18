@@ -48,14 +48,18 @@ include 'template/header.php';
 <div class="row" style="margin: 0">
     <div class="col-md-12" style="background-color: #171d5b">
         <div class="container" style="text-align: center">
+            
+        </div>
+    </div>
+</div>
+<div class="jumbotron" style="background-color: #171d5b">
+ <div class="container" style="text-align: center">
             <?php
             echo "<h2>{$username}</h2>";
             ?>
             <button class="btn btn-sm btn-primary">Follow</button>
-        </div>
-    </div>
+ </div>
 </div>
-
 <div class="container">
     <div class="row">
         <div class="col-md-3">
