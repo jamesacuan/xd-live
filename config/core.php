@@ -3,7 +3,7 @@
     session_start();
     date_default_timezone_set('Asia/Manila');
     
-    #$home_url    = "http://taxcalculator.pe.hu/";
+    #$home_url    = "http://www.hancadditive.com/";
     $home_title  = "HANC";
 
     $home_url="http://localhost/xd-live/";

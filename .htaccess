@@ -14,5 +14,4 @@ RewriteRule ^([a-z_]+)\/?$ $1.php [NC]
 
 #DirectoryIndex 503.php index.html index.php
 
-#ErrorDocument 404 http://taxcalculator.pe.hu/xd/404.php
 ErrorDocument 404 http://localhost/xd-live/404.php

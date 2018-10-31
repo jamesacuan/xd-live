@@ -144,7 +144,7 @@ $(document).ready( function () {
             startRender: function ( rows, group ) {
                
                 return  $('<tr>')
-                .append( '<td colspan="7"><a href="joborder.php?&amp;id='+group+'">Job Order #' + group + '</a></td></tr>' );
+                .append( '<td colspan="8"><a href="joborder.php?&amp;id='+group+'">Job Order #' + group + '</a></td></tr>' );
             },
             dataSrc: 1
         },

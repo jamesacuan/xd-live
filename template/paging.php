@@ -8,19 +8,8 @@ else{
     $qtype = "&type=" . $type;
 }
 
-
-if (!isset($_GET['query'])){
-    $q = "";
-}
-else{
-    $q = "&query=" . $_GET['query'];
-}
-
-
-$append = $q ."". $qtype;
-
 if($page>1){
-    echo "<li><a href='{$page_url}" . $append . "' title='Go to the first page.'>";
+    echo "<li><a href='{$page_url}" . $qtype . "' title='Go to the first page.'>";
         echo "First Page";
     echo "</a></li>";
 }
@@ -41,7 +30,7 @@ for ($x=$initial_num; $x<$condition_limit_num; $x++) {
         }
  
         else {
-            echo "<li><a href='{$page_url}page=$x" . $append . "'>$x</a></li>";
+            echo "<li><a href='{$page_url}page=$x" . $qtype . "'>$x</a></li>";
         }
     }
 }

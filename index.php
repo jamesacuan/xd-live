@@ -6,7 +6,6 @@ include_once "objects/job_order.php";
 include_once "objects/purchase_order.php";
 include_once "objects/product.php";
 include_once "objects/settings.php";
-include_once "objects/user.php";
 
 $database = new Database();
 $db = $database->getConnection();
@@ -15,17 +14,16 @@ $job_order = new JobOrder($db);
 $settings  =  new Settings($db);
 $Product   =  new Product($db);
 $purchase_order = new PurchaseOrder($db);
-$user      = new User($db);
 
 $page_title= "Dashboard";
 
 $require_login=true;
 $page_ribbon="F";
 
-$userid = $user->getUserID($_SESSION['username']);
-
 $today     = date("m/d/Y");
 $yesterday = date("m/d/Y", strtotime($today . ' -1 days'));
+
+include_once "login_check.php";
 
 if($_SESSION['role']=="superadmin" && isset($_GET['truncate'])){
     if(isset($_GET['truncate'])){
@@ -36,14 +34,13 @@ if($_SESSION['role']=="superadmin" && isset($_GET['truncate'])){
     header("Location: {$current_url[0]}");
 }
 
-include_once "login_check.php";
 include 'template/header.php'
 ?>
 
 <?php
 /*
 echo "<div class='col-md-12'>";
-$action = isset($_FGET['action']) ? $_GET['action'] : "";
+$action = isset($_GET['action']) ? $_GET['action'] : "";
 if($action=='login_success'){
         echo "<h3>Hi, " . $_SESSION['nickname'] . ". Welcome back!</h3>";
 }
@@ -75,84 +72,154 @@ echo "</div>";
 </div>
 <div class="row home-approval">
     <div class="col-md-3">
-        <div class="thumbnail panel panel-default" style="padding: 0">
-            <!--
-                <div class="caption" style="background-color: navy; height: 100px">
-
-            </div>
-            -->
-            <div class="caption"  style="padding: 0 10px">
+        <div class="thumbnail panel panel-default">
+            <div class="caption">
                 <h3>Welcome <?php echo $_SESSION["nickname"]?>!</h3>
                 <!--<p><?php echo $_SESSION["role"]?></p>-->
             </div>
-            <div class="row" style="border: none; padding:10px">
-                <div class="col-sm-6">
-                    <span class="" style="font-size: 26px"><?php echo $job_order->getActiveJobOrderCount($userid)?></span>
-                    <a href="<?php echo $home_url . "joborders.php" ?>"><span style="font-size: 12px;display:block">Job Order</span></a>
-                </div>
-                <div class="col-sm-6">
-                    <span class="" style="font-size: 26px">21</span>
-                    <a href="<?php echo $home_url . "purchaseorders.php" ?>"><span style="font-size: 12px;display:block">Purchase Order</span></a>
-                </div>
-            </div>
-         
-            <?php
-            /*
             <ul class="list-group">
                 <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
                 <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
-            </ul>
-            */
-            ?>
-            
-        </div>
-        <div class="thumbnail panel panel-default">
-            <div class="caption"  style="padding: 0 10px">
-                <h5>Trend&nbsp;<small>last 5 days</small></h5>
-                <!--<p><?php echo $_SESSION["role"]?></p>-->
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
-            </ul>
-        </div>
-        <div class="thumbnail panel panel-default">
-            <div class="caption"  style="padding: 0 10px">
-                <h5>Directory</h5>
-                <!--<p><?php echo $_SESSION["role"]?></p>-->
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "purchaseorders.php" ?>">Purchase Orders</a></li>
-                <li class="list-group-item"><a href="<?php echo $home_url . "joborders.php" ?>">Job Orders</a></li>
             </ul>
         </div>
     </div>
     <div class="col-md-9">
     <h3>Activity</h3>
-        <div class="panel panel-info">
-            <div class="panel-body" style="padding: 0">
-                <textarea class="form-control" style="width: 100%; height: 100%; border: 1px solid #ccc;resize: none;"></textarea>
-            </div>
-            <div class="panel-footer">
-                <div class="pull-left">
-                    <input type="button" class="btn btn-primary btn-sm" value="Submit" />
-                </div>
-                <div class="form-group pull-right" style="margin: 0">
-                    <label>
-                        <input type="checkbox"> Pin post.
-                    </label>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+
+        <?php
+        //echo "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\">";
+        //if($_SESSION["admin"]=='Y')
+        $stmt = $job_order->readJODActivityStream();
+        //else
+            //$stmt = $job_order->readJODwithUserandStatus($_SESSION['userid'], "For Approval");
+        $num  = $stmt->rowCount();
+
+        if($num>0){
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                extract($row);
+
+                if($XTABLE=="JO"){
+                    echo "<div class=\"panel panel-info\" style=\"margin:30px 0\">";
+                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
+                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
+                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
+                        echo "<div class=\"pull-left\">";
+                            echo "<a href=\"{$home_url}joborder.php?&id={$ID}\" >";
+                            echo "<h4 style=\"margin: 2px 0\">Job Order #{$ID}</h4>";
+                            echo "</a>";
+                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"h:i a") . "</span>";
+                        echo "</div></div>";
+                        //echo "<div class=\"panel-body\">";
+                        echo "<table class=\"table table-hover\">";
+                    $stmt2 = $job_order->readJOD($ID);
+                    $num2 = $stmt2->rowCount();
+                    $i = 0;
+                    $tempjod = $ID;
+                    if($num2>0){
+                        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                            extract($row2);
+                            if($i < 4){
+                                echo "<tr>";
+                                if($image_url=="") $image_url = "def.png";
+                                echo "<td class=\"col-xs-1\" style=\"padding-left: 15px\"><a href=\"{$home_url}joborderitem.php?&code={$code}\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /></a></td>";
+                                echo "<td class=\"col-xs-9\"><a href=\"{$home_url}joborderitem.php?&code={$code}\">{$code}</a><br/>{$note}</td>";
+                                echo "<td class=\"col-xs-2\">{$status}</td>";
+                                echo "</tr>";
+                            }
+                            else{
+                                echo "<tr>";
+                                echo "<td colspan=\"3\"><a href=\"{$home_url}joborder.php?&id={$tempjod}\" >Show All...</a></td>";
+                                echo "</tr>";
+                                break;
+                            }
+                            $i++;
+                        }
+                    }
+                    echo "</table>";
+                    echo "</div>";
+                }
+                else if($XTABLE == "PO"){
+                    echo "<div class=\"panel panel-success\" style=\"margin:30px 0\">";
+                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
+                        //echo "<div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($nickname, 0, 1)) . "\">" . substr($nickname, 0, 1) . "</div>";
+                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\">";
+                        echo "<div class=\"pull-left\">";
+                            echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
+                            echo "<h4 style=\"margin: 2px 0\">Purchase Order #{$ID}</h4>";
+                            echo "</a>";
+                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
+                        echo "</div></div>";
+                        echo "<table class=\"table table-hover\">";
+                    $stmt2 = $purchase_order->readPOItem($ID);
+                    $num2 = $stmt2->rowCount();
+                    $i = 0;
+                    if($num2>0){
+                        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                            extract($row2);
+                            if($i < 4){
+                                //echo $JODID . " " . $code;
+                                echo "<tr>";
+                                if($image_url=="undefined" || $image_url=="none" || $image_url=="0" || $image_url=="") $image_url = "def.png";
+                                echo "<td class=\"col-xs-1\" style=\"padding-left: 15px\"><img class=\"img-rounded\" src=\"{$home_url}images/{$image_url}\" width=\"40\" height=\"40\" /></td>";
+                                echo "<td class=\"col-xs-3\">";
+                                    if($product == "HH") echo "Helmet Holder";
+                                    else if($product == "TH") echo "Ticket Holder";
+                                    else if($product == "CM") echo "Chin Mount";
+                                echo "<br/><span class=\"text-muted\">{$color}</span>";
+                                echo "</td>";
+                                echo "<td class=\"col-xs-6\">";
+                                    if($productname=="0" || $productname =="") echo $type;
+                                else echo $productname;
+                                echo "<br/><span class=\"text-muted\">{$note}</span>";
+                                echo "</td>";
+                                echo "<td class=\"col-xs-2\">";
+                                echo "x{$quantity}</td>";
+                                echo "</tr>";
+                            }
+                            else{
+                                echo "<tr>";
+                                echo "<td colspan=\"3\"><a href=\"{$home_url}purchaseorder.php?&id={$ID}\" >Show All...</a></td>";
+                                echo "</tr>";
+                                break;
+                            }
+                            $i++;
+                        }
+                    }
+                    echo "</table>";
+                    echo "</div>";
+                }
+                else if($XTABLE == "PRD"){
+                    $Product->product_id = $ID;
+                    $Product->getProductItem();
+                                       
+                    echo "<div class=\"panel panel-warning\" style=\"margin:30px 0\">";
+                        echo "<div class=\"panel-heading clearfix\" role=\"tab\">";
+                        if ($Product->image_url == "none" || !isset($Product->image_url))
+                            $image_url = "def.png";
+                        //echo "<div><img class=\"img-rounded\"  width=\"40\" height=\"40\" /></div>";
+                        echo "<div class=\"pull-left\"><img src=\"{$home_url}images/" . $Product->image_url . "\" width=\"80\" height=\"80\" /> </div>";
+                        //echo "<div class=\"pull-left\" style=\"margin-left:20px\"></div>";
+                        echo "<div class=\"pull-left\" style=\"margin-left: 20px\">";
+                            //echo "<a href=\"{$home_url}purchaseorder.php?&id={$ID}\">";
+                            echo "<h4 style=\"margin: 2px 0\">" . $Product->name . "</h4>";
+                            //echo "</a>";
+                            //{$nickname} is from outside loop.
+                            echo "<span class=\"text-muted\">By {$nickname} | On " . date_format(date_create($created),"F d, Y") . " at " . date_format(date_create($created),"H:i a") . "</span>";
+                            echo "<span style=\"display:block\">";
+                            if ($Product->type == "HH") echo "Helmet Holder";
+                            else if ($Product->type == "TH") echo "Ticket Holder";
+                            else if ($Product->type == "CM") echo "Chin Mount";
+                            echo "</span>";
+                        //echo $Product->jod_id 
+                        echo "</div></div>";
+                    echo "</div>";
+                }
+            }
+        }
         
-        <?php include 'functions/stream.php' ?>
+        else echo "<div class='alert alert-info'>No recent activity.</div>";
+        
+        ?>
   
   </div>
 </div>
@@ -187,39 +254,6 @@ echo "</div>";
     </div>
   </div>
 </div>
-
-<div class='container hide' id='cont'>
-     <a data-toggle="modal" data-target="#facebook"
-        class="btn btn-default">
-        Facebook 
-        </a>
-         <a onclick="twitter();"
-        class="btn btn-default">
-        Twitter 
-        </a>
-         <a class="btn btn-default"
-        data-placement="bottom" data-toggle="popover" data-title="Login" data-container="body"
-        type="button" data-html="true" href="#" id="login">
-        Email 
-        </a>
-</div>
-
-<script>
-var i=0;
-$(window).scroll(function() {
-    if($(window).scrollTop() == $(document).height() - $(window).height()) {
-        $.ajax({
-            url:"functions/activity.php",
-            method:"POST",
-            data:{i:i},
-            success:function(data){  
-                i+=10;
-                $('.home-approval .col-md-9').append(data);  
-            }
-        })
-    }
-});
-</script>
 <?php
     //include 'template/content.php';
     include 'template/footer.php';

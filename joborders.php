@@ -4,6 +4,9 @@ include_once "config/database.php";
 include_once "objects/job_order.php";
 include_once "objects/settings.php";
 
+$require_login=true;
+include_once "functions/login_check.php";
+
 $database = new Database();
 $db = $database->getConnection();
 $type = "";
@@ -11,10 +14,9 @@ $job_order = new JobOrder($db);
 $settings = new Settings($db);
 
 $page_title="Job Orders";
-$require_login=true;
 $role = $_SESSION['role'];
 
-include_once "functions/login_check.php";
+
 include_once "functions/joborders_post.php";
 include 'template/header.php';
 
@@ -157,9 +159,10 @@ function truncate($string, $length, $dots = "...") {
                     <th class="col-xs-1">Image</th>
                     <th class="col-xs-1">Code</th>
                     <th class="col-xs-1">By</th>
-                    <th class="col-xs-5">Note</th>
-                    <th class="col-xs-1">Status</th>
-                    <th class="col-xs-2">Last Modified</th>
+                    <th class="col-xs-3">Note</th>
+                    <th class="col-xs-1">Date Created</th>
+                    <th class="col-xs-1">Last Update</th>
+                    <th class="col-xs-3">Status</th>
                     <!--<th class="col-xs-1">Actions</th>-->
                 </tr>
             </thead>
@@ -209,12 +212,6 @@ function truncate($string, $length, $dots = "...") {
                             //echo "<td><div class=\"xd-circle pull-left\" style=\"background-color: #" . $settings->getColor(substr($username, 0, 1)) . "\">" . substr($username, 0, 1) . "</div></td>";
                             
                             echo "<td class=\"clearfix\">";
-                            if(($diff->d)>4 && $status!="Denied" && $status != "Published"){
-                                echo " <span class=\"label label-danger\">Overdue</span>";
-                            }
-                            else if(($diff->d)<2 && strcmp($status,"For Approval")==0){
-                                echo " <span class=\"label label-primary\">New</span>";
-                            }
                             echo "&nbsp;<span>" . truncate($note,60, "...") ."</span><span class=\"label label-warning\">{$tag}</span>";
                             //if($date_today == $date_created) echo " <span class=\"label label-default\">New</span>";
                             //echo  $date_today . " - " . $date_created;
@@ -223,19 +220,12 @@ function truncate($string, $length, $dots = "...") {
                             //echo "<span class=\"glyphicon glyphicon-picture pull-right\" data-toggle=\"modal\" data-target=\"#image\" data-file=\"{$image_url}\" title=\"{$image_url}\"></span></td>";
                             //echo "<td><span title=\"" . date_format(date_create($created),"F d, Y h:i:s A") . "\">{$date_created}</span></td>";
 
-                            echo "<td><span class=\"label ";
-                                if     ($status=="For Approval") echo "label-default\">On-queue";
-                                elseif ($status=="Approved") echo "label-info\">Approved";
-                                elseif ($status=="Done") echo "label-primary\">Done";
-                                elseif ($status=="Published") echo "label-success\">Published";
-                                else   echo "label-default";
-                            echo "</span>";
-                            echo "</td>";
-                            echo "<td class=\"datetime\"><span class=\"dtime\" data-toggle=\"tooltip\" title=\"" . date_format(date_create($created),"F d, Y h:i:s A") . "\">" . date_format(date_create($modified),"m-d-Y h:i:s A") . "</span>";
+                            
+                            echo "<td class=\"datetime\"><span class=\"dtime\" data-toggle=\"tooltip\" title=\"" . date_format(date_create($created),"F d, Y h:i:s A") . "\">" . date_format(date_create($created),"m-d-Y h:i:s A") . "</span>";
                             
                             echo "</td>";
-                            
-                            
+                            echo "<td><span class=\"dtim\" data-toggle=\"tooltip\" title=\"" . date_format(date_create($modified),"F d, Y h:i:s A") . "\">" . date_format(date_create($modified),"M d, Y") . "</span> </td>";
+                           
 
                             ?>
                             <?php
@@ -258,6 +248,21 @@ function truncate($string, $length, $dots = "...") {
                                 </div>
                                 <?php
                                     }*/
+
+                            echo "<td><span class=\"label ";
+                                if     ($status=="For Approval") echo "label-default\">On-queue";
+                                elseif ($status=="Approved") echo "label-info\">Approved";
+                                elseif ($status=="Done") echo "label-primary\">Done";
+                                elseif ($status=="Published") echo "label-success\">Published";
+                                else   echo "label-default";
+                            echo "</span>";
+                            if(($diff->d)>4 && $status!="Denied" && $status != "Published"){
+                                echo " <span class=\"label label-danger\">Overdue</span>";
+                            }
+                            else if(($diff->d)<2 && strcmp($status,"For Approval")==0){
+                                echo " <span class=\"label label-primary\">New</span>";
+                            }
+                            echo "</td>";
                                 ?>
                             <?php
 

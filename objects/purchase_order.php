@@ -150,16 +150,17 @@ class PurchaseOrder{
 
     function read(){
         $query = "SELECT purchase_order.id,
-                    users.nickname,
-                    purchase_order.created,
-                    s1.status,
-                    users.username
-                FROM `purchase_order`
-                JOIN users on users.userid = purchase_order.userid
-                JOIN purchase_order_status s1 on s1.purchase_orderid = purchase_order.id
-                WHERE purchase_order.isDeleted <> 'Y'
-                AND s1.created = (SELECT MAX(s2.created) FROM purchase_order_status s2
-                                    WHERE s2.purchase_orderid = s1.purchase_orderid)";
+                        users.nickname,
+                        purchase_order.created,
+                        s1.created as lastupdate,
+                        s1.status,
+                        users.username
+                    FROM `purchase_order`
+                    JOIN users on users.userid = purchase_order.userid
+                    JOIN purchase_order_status s1 on s1.purchase_orderid = purchase_order.id
+                    WHERE purchase_order.isDeleted <> 'Y'
+                    AND s1.created = (SELECT MAX(s2.created) FROM purchase_order_status s2
+                                        WHERE s2.purchase_orderid = s1.purchase_orderid)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

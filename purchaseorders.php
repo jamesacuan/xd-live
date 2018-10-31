@@ -3,15 +3,17 @@ include_once "config/core.php";
 include_once "config/database.php";
 include_once "objects/purchase_order.php";
 
+$require_login=true;
+include_once "functions/login_check.php";
+
+
 $database = new Database();
 $db = $database->getConnection();
 $purchase_order = new PurchaseOrder($db);
 $page_title="Purchase Orders";
-$require_login=true;
 $role = $_SESSION['role'];
 
 
-include_once "functions/login_check.php";
 include_once "functions/purchaseorders_post.php";
 include 'template/header.php';
 ?>
@@ -68,8 +70,9 @@ include 'template/header.php';
                     <tr>
                         <th class="col-xs-1"><input type="checkbox" /></th>
                         <th class="col-xs-1">PO</th>
-                        <th class="col-xs-4">By</th>
-                        <th class="col-xs-4">Date</th>
+                        <th class="col-xs-3">By</th>
+                        <th class="col-xs-2">Date Requested</th>
+                        <th class="col-xs-2">Last Update</th>
                         <th class="col-xs-2">Status</th>
                         <th class="col-xs-1">Action</th>
                     </tr>
@@ -112,13 +115,8 @@ include 'template/header.php';
                         echo "<td><a href=\"#\" data-toggle=\"modal\" data-remote=\"false\" data-target=\"#preview\">{$id}</a></td>";
                         echo "<td>{$nickname}</td>";
                         echo "<td><span class=\"dtime\"  data-toggle=\"tooltip\" title=\"" . date_format(date_create($created),"F d, Y h:i:s A") . "\">" . date_format(date_create($created),"m-d-Y h:i:s A") . "</span>";
-                        if(($diff->d)>4 && ($status!="Denied" && $status != 'paid')){
-                            echo " <span class=\"label label-danger\">Overdue</span>";
-                        }else if(($diff->d)<2){
-                            echo " <span class=\"label label-primary\">New</span>";
-                        }
                         echo "</td>";
-
+                        echo "<td><span class=\"dtim\" data-toggle=\"tooltip\" title=\"" . date_format(date_create($lastupdate),"F d, Y h:i:s A") . "\">" . date_format(date_create($lastupdate),"F d, Y") . "</span> </td>";
                         /* STATUS */
                         echo "<td><span class=\"label ";
                         if($status == 'New' || $status == 'On-queue') echo  'label-default">On-queue';
@@ -126,7 +124,13 @@ include 'template/header.php';
                         else if($status == 'processing') echo 'label-info">Processing';
                         else if($status == 'delivered') echo 'label-primary">Delivered';
                         else echo 'label-primary">' . $status;
-                        echo "</span></td>";
+                        echo "</span>";
+                        if(($diff->d)>4 && ($status!="Denied" && $status != 'paid')){
+                            echo " <span class=\"label label-danger\">Overdue</span>";
+                        }else if(($diff->d)<2){
+                            echo " <span class=\"label label-primary\">New</span>";
+                        }
+                        echo "</td>";
                         
                         echo "<td><a href=\"purchaseorder.php?&amp;id={$id}\" class=\"btn btn-xs btn-default\">View</a></td>";
                         echo "</tr>";

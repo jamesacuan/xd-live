@@ -1,12 +1,12 @@
 <?php
 class Database{
- 
-    //private $host = "mysql.hostinger.ph";
-    private $host = "localhost";
-    private $db_name = "u166415122_xd";
-    /* private $username = "u166415122_xuser";
-    private $password = "Fe15N9oqD8";*/
+    private $db_name = "db758618865";
+
+    /*private $host = "db758618865.db.1and1.com";
+    private $username = "dbo758618865";
+    private $password = "Y2fqLVrV@";*/
     
+    private $host = "localhost";
     private $username = "root";
     private $password = "";
     public  $conn;

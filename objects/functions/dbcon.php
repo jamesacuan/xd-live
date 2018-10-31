@@ -1,5 +1,5 @@
 <?php
-//$connect = mysqli_connect("mysql.hostinger.ph", "u166415122_xuser", "Fe15N9oqD8", "u166415122_xd");
-$connect = mysqli_connect("localhost", "root", "", "u166415122_xd");
+//$connect = mysqli_connect("db758618865.db.1and1.com", "dbo758618865", "Y2fqLVrV@", "db758618865");
+$connect = mysqli_connect("localhost", "root", "", "db758618865");
 $output = '';
 ?>

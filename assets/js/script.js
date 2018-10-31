@@ -1,5 +1,5 @@
 var home_url = "http://localhost/xd-live/";
-//var home_url = "http://taxcalculator.pe.hu/";
+//var home_url = "http://www.hancadditive.com/";
 
 $('#image').on('shown.bs.modal', function (event) {
     var button   = $(event.relatedTarget);
@@ -22,23 +22,10 @@ $("button[data-close='alert']").click(function(){
 
 $(document).ready( function () {
      $('[data-toggle="tooltip"]').tooltip();
-     /*$('[data-toggle="popover"]').popover( {
-         trigger: "hover",
-         html: true,
-        content: $('#cont').html()
-    });*/
-    $('a.profile-link').popover( {
-        trigger: "hover",
-        html: true,
-       content: $('#cont').html(),
-       delay: { 
-            show: "1000", 
-            hide: "100"
-        }
-   });
-
+     $('[data-toggle="popover"]').popover();
     
 });
+
 
 moment().format();
 setMoment();
@@ -70,23 +57,5 @@ $(function() {
     $('span.required').parent().attr('title','this field is required');
 
     $("img.xd-img").lazyload();
+
 });
-
-/*   $(".nav-search input[type='search']").autocomplete({
-        source: 'http://localhost/xd-live/functions/autocomplete.php',
-        //source: availableTags,
-        select: function (event, ui) {
-            event.preventDefault();
-            this.value = ui.item.name;
-            //alert(ui.item.value);
-        }
-      });*/
-
-
-      /*var options = {
-        url: "http://localhost/xd-live/functions/autocomplete.php",
-        getValue: "name",
-        
-    };*/
-    
-    //$(".nav-search input[type='search']").easyAutocomplete(options);

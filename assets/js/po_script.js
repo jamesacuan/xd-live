@@ -17,12 +17,24 @@ $(document).ready(function(){
     });
    
     $('input[name="product"]').click(function(){
-       $('#item_type').show();
-       type=$('input[name="product"]:checked').val();
+        $('#item_type').show();
+        type=$('input[name="product"]:checked').val();
+        userid=$('input[id="uid"]').val();
+       if($("input[name='product']:checked").val()=='CM'){
+            $('#item_type').hide();
+            $("input[name='type'][value='custom']").prop("checked", true);
+            $('#item_custom').show();
+            fetch_products(type, userid);
+            console.log(type);
+       }
+       else{
+            $('input[name="type"]').prop('checked',false);
+            $('#item_custom').hide();
+       }
+
        fetch_colors(type);
        $('#item_color').show();
-       $('#item_custom').hide();
-       $('input[name="type"]').prop('checked',false);
+       
     });
     
     $('#csm').click(function(){
@@ -113,6 +125,7 @@ $(document).ready(function(){
                note     = $("textarea[name='note']").val();
                if(product=="HH")       prodname = "Helmet Holder";
                else if(product=="TH")  prodname = "Ticket Holder";
+               else if(product=="CM")  prodname = "Chin Mount";
 
                if(type=='plain'){
                   custom = "0";   //for whatever reason, this has been the default value.

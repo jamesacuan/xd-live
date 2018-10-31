@@ -17,7 +17,6 @@
 <?php 
     }
 ?>
-<script src="assets/js/jquery.easy-autocomplete.min.js"></script>
 <script src="assets/js/script.js"></script>
 
 </body>

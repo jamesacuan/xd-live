@@ -17,6 +17,7 @@ if (!isset($_GET['type']))
 else {
     if(strtolower($_GET['type'])=='hh') $type="HH";
     elseif(strtolower($_GET['type'])=='th') $type="TH";
+    elseif(strtolower($_GET['type'])=='cm') $type="CM";
     else $type="";
 }
 
@@ -56,6 +57,7 @@ include 'template/header.php'
             <ul class="list-group">
                 <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=HH">Helmet Holder</a></li>
                 <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=TH">Ticket Holder</a></li>
+                <li class="list-group-item"><a href="<?php echo $home_url ?>products.php?type=CM">Chin Mount</a></li>
                 <li class="list-group-item">
                     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="get">
                         <input type="search" class="form-control" placeholder="search" name="query" <?php if(isset($_GET['query'])) echo "value=\"{$query}\""  ?> />
@@ -94,11 +96,18 @@ include 'template/header.php'
                 echo "\" ";
                     if(isset($_GET['type']) && $type=="HH") echo "selected";
                 echo ">Helmet Holder</option>";
+
                 echo "<option value=\"products.php?type=TH";
                     if(isset($_GET['query'])) echo "&query={$query}";
                 echo "\" ";
                     if(isset($_GET['type']) && $type=="TH") echo "selected";                
                 echo ">Ticket Holder</option>";
+
+                echo "<option value=\"products.php?type=CM";
+                    if(isset($_GET['query'])) echo "&query={$query}";
+                echo "\" ";
+                    if(isset($_GET['type']) && $type=="CM") echo "selected";
+                echo ">Chin Mount</option>";
                 echo "</select>";
             echo "</div>";
 
@@ -132,14 +141,15 @@ include 'template/header.php'
                     if($image_url=="none") echo  "<img src=\"{$home_url}images/def.png\">";
                     else   echo  "<img data-src=\"{$home_url}images/{$image_url}\" class=\"xd-img\">";
                     echo  "<div class=\"caption\">";
-                    if($type=="HH"){
+                    //if($type=="HH"){
                         echo "<h4>{$name}</h4>";
-                    }
-                    else if($type=='TH')
-                        echo    "<h4>{$name}</h4>";
-                    echo    "<p>";
+                    //}
+                    //else if($type=='TH')
+                        //echo    "<h4>{$name}</h4>";
+                    //echo    "<p>";
                         if($type=="HH") echo "Helmet Holder";
                         else if($type=='TH') echo "Ticket Holder";
+                        else if($type=='CM') echo "Chin Mount";
                     echo "</p>";
                     //echo "<p>{$id}</p>";
                     //echo    "<p>";

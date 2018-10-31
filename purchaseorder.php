@@ -142,7 +142,6 @@ include 'template/header.php';
                 <div class="row">
                     <div class="col-sm-12 clearfix">
                         <div class="pull-right btn-group xd-joitem-details-btngroup">
-                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#addItemModal">Add another item</a>
                             <?php if (($role=='hans') && ($purchase_order->status=='On-queue' || $purchase_order->status=='New')){ ?>
                             <?php //<a href="<?php echo "{$home_url}purchaseorder.php?&id={$id}&status=processing";" class="btn btn-primary">Accept Request</a>?>
                             <a href="#" class="btn btn-primary" disabled="disabled" data-toggle="tooltip" title="Please use the accept request button from Purchase Orders list">Accept Request</a>
@@ -294,6 +293,7 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
                         echo "<td><b>";
                         if($product == "HH") echo "Helmet Holder";
                         else if($product == "TH") echo "Ticket Holder";
+                        else if($product == "CM") echo "Chin Mount";
                         echo "</b>";
                         if(!empty($note))echo "<p>Note: {$note}</p></td>";
                         echo "<td class=\"xd-custom\">";
@@ -449,79 +449,5 @@ if($purchase_order->username == $_SESSION['username'] || $_SESSION['role']=='han
   </div>
 </div>
 
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-            <h4 class="modal-title">Add Item</h4>
-        </div>
-        <div class="modal-body form-horizontal">
-            <p class="bg-danger" id="dialog_warn"></p>
-            <div class="form-group" id="item_product">
-                <label class="control-label col-sm-3">Product<span class="required">*</span></label>
-                <div class="radio col-sm-9">
-                        <label for="HH" class="radio-inline">
-                            <input type="radio" value="HH" name="product" id="HH">Helmet Holder
-                        </label>
-                        <label for="TH" class="radio-inline">
-                            <input type="radio" value="TH" name="product" id="TH">Ticket Holder
-                        </label>
-                    </div>
-                </div>
-            <div class="form-group" id="item_type">
-                <label class="control-label col-sm-3">Type<span class="required">*</span></label>
-                <div class="radio radio col-sm-9">
-                        <label for="pln">
-                            <input type="radio" value="plain" name="type" id="pln">Plain
-                        </label>
-                        <label for="csm">
-                            <input type="radio" value="custom" name="type" id="csm">Custom
-                        </label>
-                    </div>
-            </div>
-            <div class="form-group" id="item_color">
-                <label class="control-label col-sm-3">Color<span class="required">*</span></label>
-                <div class="col-sm-9">
-                    <select class="form-control input-sm" name="color" id="colors"></select>
-                </div>
-            </div>
-            <div class="form-group" id="item_custom">
-                <label class="control-label col-sm-3">Custom Logo<span class="required">*</span></label>
-                <div class="col-sm-9">
-                    <select class="form-control input-sm" name="custom" id="custom"></select>
-                </div>
-            </div>
-
-            <div class="form-group" id="item_quantity">
-                <label class="control-label col-sm-3">Quantity<span class="required">*</span></label>
-                <div class="col-sm-9">
-                    <input type="number" name="quantity" class="form-control" min="1" />
-                </div>
-            </div>
-            <div class="form-group" id="item_note">
-                <label class="control-label col-sm-3">Note</label>
-                <div class="col-sm-9">
-                    <textarea name="note" class="form-control" maxlength="100"> </textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <input type="hidden" name="row_id" id="hidden_row_id" />
-            <button type="button" name="save" id="save" class="btn btn-info">Add Item</button>
-        </div>
-        </div>
-    </div>
-</div>
-
-
 <script src="assets/js/pod_script.js"> </script>
-<?php $purchase_order->readPOD($poid);?>
-
-<?php if ($purchase_order->status=='New'){ ?>
-    
-    <script src="assets/js/select2.jquery.js"></script>
-    <script src="assets/js/po_script.js"></script>
-<?php } ?>
 <?php include_once 'template/footer.php' ?>

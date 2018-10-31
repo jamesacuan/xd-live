@@ -138,6 +138,9 @@ if($_POST){
                     <label class="radio-inline">
                         <input type="radio" name="type" value="TH">Ticket Holder
                     </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="type" value="CM">Chin Mount
+                    </label>
                 </div>
             </div>
 

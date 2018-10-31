@@ -23,7 +23,7 @@
     ?>
 
     <?php
-    if(strpos($page_title,"Purchase Order")=='true'){
+    if($page_title == "Create New Purchase Order"){
     ?>
     <link href="assets/css/select2.bootstrap.css" rel="Stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
@@ -64,16 +64,12 @@
     <?php unset($_SESSION['modal']); } ?>
 
      <?php 
-     if(isset($page_ribbon) && isset($profiles)){
-
+     if(isset($page_ribbon)){
+        echo "<div class=\"container\">";
      }
-     else if(isset($page_ribbon)){
-        echo "<div class=\"container\" style=\"padding-top: 90px\">";
-     }
-
      else {
         echo "<div class=\"xd-ribbon\"></div>";
-        echo "<div class=\"xd-container container\" style=\"padding-top: 50px\">";
+        echo "<div class=\"xd-container container\">";
      }
      ?>
 
